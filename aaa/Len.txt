@@ -1,0 +1,5 @@
+Function Len(Expression)
+
+    VBA.Strings 的成员
+
+    返回存储一个变量所需的字符串的长度和字节数

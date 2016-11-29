@@ -1,0 +1,44 @@
+DoEvents
+=================VB=====================
+Function DoEvents() As Integer
+
+    VBA.Interaction 的成员
+
+    放弃执行，使操作系统能处理其他事件
+---------------------
+返回值：DoEvents 函数会返回一个 Integer，以代表 Visual Basic 独立版本中打开的窗体数目，例如，Visual Basic，专业版，在其它的应用程序中，DoEvents 返回 0。 
+==========================================
+
+转让控制权，以便让操作系统处理其它的事件。最简单的理解，比如你要在某个耗时很多的过程中（最常见的是循环），还要响应某个操作－比如控制进度条的显示，那就需要加入DoEvents
+========================Blog=================================
+用了doevents速度太慢了怎么办?
+--------------------------------------
+doevents的代价是速度变慢,但要程序响应又不得不用，其实doevents语句允许任何应用程序执行相关事件，而不仅仅是你自己的程序,所以变得很慢.
+可以让它响应本程序事件动作,需要用到api函数GetInputState，
+它的声明语句为：
+'Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+Public Declare Function GetInputState Lib "user32" () As Long
+例如用: If GetInputState() Then DoEvents '来代替doevents可使循环运行更快
+==================================================================
+VB6 DoEvents函数 转让控制权
+----------------------------------------
+      DoEvents函数的功能是：转让控制权，以便让操作系统处理其它的事件。VB6的代码在多线程中运行时不稳定，故VB中的多线程用的很少,那么在需要用某一循环处理相当耗时或者很快速的代码时 用DoEvents以使用户能在其处理过程中能做其他事情 。
+
+      简单的用法如下，在相当耗时或者很快速的循环代码中加入 if GetInputState then doevents 来转让控制权
+
+  Declare Function GetInputState Lib "user32" () As Long
+' 判断是否存在任何待决（等待处理）的鼠标或键盘事件，返回值 Long，非零表示成功，零表示失败，在win32下，这个函数只返回当前输入线程的状态。
+
+Private sub UserSub（）
+
+For i=  1To   10000
+
+if GetInputState then doevents   '转让控制权
+
+'用户处理代码
+
+Next i
+
+End Sub
+
+==============================================================

@@ -1,0 +1,109 @@
+PaintPicture
+=========VB==============
+Sub PaintPicture(Picture As IPictureDisp, X1 As Single, Y1 As Single, [Width1], [Height1], [X2], [Y2], [Width2], [Height2], [Opcode])
+VB.Form 的成员
+画 Form、PictureBox、或 Printer 对象上的图形文件的内容。
+Soy:画了PictureBox.PaintPicture在PictureBox.Picture读出来是空的，PictureBox.Image就有东西
+
+===========================
+
+
+PaintPicture 方法
+用以在 Form, PictureBox 或 Printer 上绘制图形文件（.bmp、.wmf、.emf、.cur、.ico或 .dib）的内容。不支持命名参数。
+
+语法
+object.PaintPicture picture, x1, y1, width1, height1, x2, y2, width2, height2, opcode
+
+PaintPicture 方法的语法包含下列部分：
+
+部分	描述 
+object	可选的。一个对象表达式，其值为“应用于”列表中的一个对象。如果省略 object，带有焦点的 Form 对象缺省为 object。 
+Picture	必需的。要绘制到 object 上的图形源。Form 或 PictureBox 必须是 Picture 属性。 
+x1, y1	必需的。均为单精度值，指定在 object 上绘制 picture 的目标坐标（x-轴和y-轴）。object 的 ScaleMode 属性决定使用的度量单位。  
+Width1	可选的。单精度值，指示 picture 的目标宽度。object 的 ScaleMode 属性决定使用的度量单位。如果目标宽度比源宽度 (width2) 大或小，将适当地拉伸或压缩 picture。如果该参数省略，则使用源宽度。 
+Height1	可选的。 单精度值，指示 picture 的目标高度。object 的 ScaleMode 属性决定使用的度量单位。如果目标高度比源高度 (height2) 大或小，将适当地拉伸或压缩 picture。如果该参数省略，则使用源高度。 
+x2, y2	可选的。均为单精度值，指示 picture 内剪贴区的坐标（x-轴和y-轴）。object 的 ScaleMode 属性决定使用的度量单位。如果该参数省略，则缺省为 0。 
+Width2	可选的。单精度值，指示 picture 内剪贴区的源宽度。object 的 ScaleMode 属性决定使用的度量单位。如果该参数省略，则使用整个源宽度。 
+Height2	可选的。 单精度值，指示 picture 内剪贴区的源高度。object 的 ScaleMode 属性决定使用的度量单位。如果该参数省略，则使用整个源高度。 
+Opcode	可选的。是长型值或仅由位图使用的代码。它用来定义在将 pictur 绘制到 object 上时对 picture 执行的位操作（例如， vbMergeCopy 或 vbSrcAnd 操作符）。关于位操作符常数的完整列表，请参阅 Visual Basic Help 文件中的 RasterOp Constants 主题。 
+	在使用opcode时有一些限制。例如，如果资源是图标或图元文件，则只能使用 vbSrcCopy，而不能使用其他的opcode；并且，与图案 (或 SDK 术语中的"画笔")，如 MERGECOPY、 PATCOPY、 PATPAINT 和 PATINVERT，相交互的opcode实际上是同目标的 FillStyle 属性交互。
+
+注意
+Opcode 用于将按位操作传递到位图。当传递其他图象类型时将一个值给该参数会造成“无效过程调用或参数”错误。这是设计的原因。要避免这个错误，对于除位图外的图象，将 Opcode 参数置为空。
+
+Opcode参数表
+常量		值		功能
+SRCCOPY		&HCC0020	目标图像=源图像
+SRCPAINT	&HEE0086	目标图像=源图像 OR 目标图像
+SRCAND		&H8800C6	目标图像=源图像 AND 目标图像
+SRCINVERT	&H660046	目标图像=源图像 XOR 目标图像
+SRCERASE	&H440328	目标图像=源图像 AND (NOT 目标图像)
+NOTSRCCOPY	&H330008	目标图像=NOT 源图像
+NOTSRCERASE	&H1100A6	目标图像=(NOT 源图像) AND (NOT 目标图像)
+MERGECOPY	&HC000CA	目标图像=源图像 AND 模版
+MERGEPAINT	&HBB0226	目标图像=(NOT 源图像) OR 目标图像
+PATCOPY		&HF00021	目标图像=模版
+PATINVERT	&H5A0049	目标图像=模版 XOR 目标图像
+PATPAINT	&HFB0A09	目标图像=(NOT 源图像) OR 模版 OR 目标图像
+DSINVERT	&H550009	目标图像=NOT 目标图像
+BLACKNESS	&H42		目标图像=0 (所有位都为0)
+WHITENESS	&HFF0062	目标图像=1 (所有位都为1)
+
+说明
+通过使用负的目标高度值 (height1) 和 / 或目标宽度值 (width1) ，可以水平或垂直翻转位图。 
+可以省略任何多个可选的尾部的参数 。如果省略了一个或多个可选尾部参数，则不能在指定的最后一个参数后面使用逗号。如果想指定某个可选参数，则必须先指定语法中出现在该参数前面的全部参数。
+
+注意，在将一个.Bmp加载入 PictureBox 控件和使用 Windows API 函数 BitBlt() 添加图片之间有一点不同。当您对一个图象使用 BitBlt() 时，PictureBox 控件不知道象您使用 LoadPicture方法那样去调整大小。将 ScaleWidth 和 ScaleHeight 属性设置为图象的大小也不起作用。如果您想在使用 BitBlt 之后用 PictureBox 调整新图片的大小，必须用代码手工做，转换单位并处理边框，下面是如何这样做的一个简单示例：
+
+Sub ResizePictureBoxToImage(pic as PictureBox, twipWd _
+   as Integer, twipHt as Integer)
+  ' 该代码假设所有的单位都为缇。如果
+ ' 不是，必须在调用该例程之前，转换为缇。
+ ' 这里也假设图象显示在0,0处。
+ Dim BorderHt as Integer, BorderWd as Integer
+  BorderWd = Pic.Width - Pic.ScaleWidth
+  BorderHt = Pic.Height - Pic.ScaleHeight
+  pic.Move pic.Left, pic.Top, twipWd + BorderWd, _
+    twipHt + BorderHt
+ End Sub
+
+===资料==================
+VB中PaintPicture图形方法的使用(1)
+ 
+----------------------------------------------------
+
+　　在VB中提供了完善的做图方法, 可以在窗体或图形框中绘制各种图形, 其中提供了一个方便的图像处理命令即PaintPicture, 此命令的功能与WINDOWS API 函数BitBlt类似,但由于不用做API函数说明,并且有它独特的功能,所以更有它的方便之处, 使用它可以完成很多图像的特殊处理工作。 
+
+一、语法格式 
+
+　　PaintPicture Pic,destX,destY,destWidth,destHeight,scrX,scrY,scrWidth,scrHeight 
+
+　　其中Pic为图片对象, 如图形框Picture等; 
+
+　　destX,destY目标图像位置; 
+
+　　destWidth,destHeight目标图像尺寸; 
+
+　　scrX,scrY原图像的裁剪坐标; 
+
+　　scrWidth,scrHeight原图像的裁剪尺寸; 
+
+　　从以上格式可以看出，此命令的功能就是把一个源图像资源任意复制到指定的区域,并且通过改变参数destWidth与destHeight值,还可以改变复制后的图像的尺寸,实现放大或缩小图像显示, 甚至可以置这两个属性为负值, 这样可使目标图像在水平方向翻转，实现特殊效果的图像显示。 
+
+　　二、应用举例 
+
+　　1.墙纸的制作 
+
+　　所谓的墙纸, 就是用一个小尺寸的图像连续在一个区域显示, 形成规则的重复图像, 也称为图像的平铺显示,利用“PaintPicture命令可以方便的完成此工作, 即用一个固定的图像资源多次连续复制到窗口中; 复制过程中必须准确计算下一图像的起始位置; 显示过程中可采取两种方法, 第一种方法可置源图像资源即图形框的AutoSize属性为真, 并且显示过程中按源图像的实际尺寸复制, 这是正常的图像平铺显示; 还有一种方法就是通过置AutoSize属性为假, 然后改变图形框的尺寸, 或者直接修改目标图像的尺寸, 这样可实现放大或缩小图像的平铺显示。具体作方法请见Command1_Click()事件中的代码。 
+
+　　2.随机图像显示 
+
+　　随机图像在一定场合具有特殊的魅力，比如把一个固定的图像连续的在某一区域中的随机位置显示，这样即可得到一种特殊的屏幕效果，具体操作时需要使用VB的内部函数RND, 此函数可产生0－1之间的随机数, 通过此随机数确定显示的图像的位置即destX与destY参数, 这样即可使图像在随机位置显示, 通过此原理也可以使图像的尺寸等其它参数随机产生, 以产生其它效果的随机图像效果。具体操作方法请见Command2_Click()事件中的代码。 
+
+　　3.镜头推出效果 
+
+　　镜头推出效果实际上就是图像的放大或缩小显示, 利用“PaintPicture命令实现此功能,只需要改变destWidth及destHeight参数即可, 具体操作时需要注意保持图像的中心点不变, 在图像的放大或缩小过程中同时改变图像的起始坐标。此命令的图像显示速度不低于API函数的BitBlt命令, 图像放大或缩小过程中基本没有抖动的感觉。具体操作方法请见Command3_Click()事件中的代码。 
+
+　　4.拖尾效果的形成 
+
+　　此效果的形成与图像的放大过程基本相似，区别在于无需保持中心点不变，而在图像的放大过程中，向一个方向逐渐改变图像的起始位置，并且起始的图像尺寸置为0，这样当图像放大显示到一定位置时，其后面就留下了多彩的拖尾效果。具体操作方法请见Command4_Click()事件中的代码。

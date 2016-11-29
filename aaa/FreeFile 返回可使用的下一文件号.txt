@@ -1,0 +1,6 @@
+Function FreeFile([RangeNumber]) As Integer
+VBA.FileSystem 的成员
+返回 Open 方法可使用的下一文件的号码
+
+eg:
+F = FreeFile

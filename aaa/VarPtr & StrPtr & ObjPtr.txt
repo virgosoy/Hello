@@ -1,0 +1,57 @@
+VarPtr(Variant)
+获取 Variant 内存地址，这是个隐含的函数
+
+=============
+StrPtr
+要获取string的地址的话,应该用StrPtr
+--------
+Function StrPtr(Ptr As String) As Long
+VBA._HiddenModule 的成员
+===============
+ObjPtr
+对象入口地址
+
+========资料==========
+-----------VarPtr函数 VB  ------------------
+
+一直不太明白，还望高手留言指导一下。。
+
+
+       VarPtr，是VB中才会出现的东西，用来代替C中的指针。
+猜想：VarPtr函数，并不是取其参数地址的意思，因参数采用的就是ByRef传递；VarPtr函数将参数地址“数值转化”为指针地址，在括号中其变量地址已经取好了。
+VarPtr其函数原型如下，用OleView打开c:\windows\system32\msvbvm60.dll可知：
+[entry(0x60000006), hidden]
+
+long _stdcall VarPtr([in] void* Ptr);
+
+请看下两个例子：
+例一：
+Dim s As Long:s=-11                 ‘为非指针型变量均可，如Byte等，会转化成Long。
+MsgBox VarPtr(s)                      ‘得到变量s的地址
+MsgBox VarPtr(-11)                   ‘得到临时变量的地址
+MsgBox VarPtr(ByVal s)            ‘不用建立临时变量，结果为-11。如果VarPtr为取址，肯定不会为-11；此处不取址了，仅转化值。
+例二：
+Dim s As string:s=”asdfg”
+
+MsgBox VarPtr(s)                      ‘得到变量s的地址
+MsgBox VarPtr(“asdfg”)            ‘得到临时变量的地址
+MsgBox VarPtr(ByVal s)            ‘得到字符串”asdfg”的地址
+上面两例的结果均为Long型，且前两个地址数值相近，因均属变量型，而最后一个为常量。
+VB不鼓励使用指针，比如MsgBox s，单独用变量名s，就是无法得地址。VarPtr的最大作用，当然是突破限制、“抠”出了变量的指针数值。那“数值转化”有什么用呢？其实没什么特别。我们来自己定义个VarPtr，在例一中加上Private Declare Function VarPtr Lib "msvbvm60.dll" (x As Any) As Integer，会进行Long与Integer的转换。
+再看例三，三个MsgBox的结果相同：
+例三：
+Dim s As Long:s = -11
+
+MsgBox VarPtr(s)
+
+MsgBox VarPtr(ByVal VarPtr(s))       ‘不可省去ByVal，那会是临时变量的地址
+Dim t As Long
+
+t = VarPtr(s)
+
+MsgBox VarPtr(ByVal t)
+
+End
+
+可以看出，实参中ByVal VarPtr(x)的搭配和(ByRef) x一样；VarPtr(ByVal x)和x一样。
+====================================

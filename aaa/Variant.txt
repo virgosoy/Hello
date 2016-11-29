@@ -1,0 +1,246 @@
+====百度百科=======
+Variant
+-------------------
+Variant 数据类型是所有没被显式声明（用如 Dim、Private、Public 或 Static等语句）为其他类型变量的数据类型。Variant 数据类型并没有类型声明字符。
+
+-----------------数据类型-------------
+
+特殊
+　　Variant 是一种特殊的数据类型，除了定长 String 数据及用户定义类型外，可以包含任何种类的数据。Variant 也可以包含 Empty、Error、Nothing 及 Null等特殊值。可以用 VarType 函数或 TypeName 函数来决定如何处理 Variant 中的数据。 
+　　数值数据可以是任何整型或实型数，负数时范围从 -1.797693134862315E308 到 -4.94066E-324，正数时则从 4.94066E-324 到 1.797693134862315E308。通常，数值Variant 数据保持为其 Variant 中原来的数据类型。例如，如果把一个 Integer赋值给 Variant，则接下来的运算会把此 Variant 当成 Integer 来处理。然而，如果算术运算针对含 Byte、Integer、Long 或 Single 之一的Variant 执行，并当结果超过原来数据类型的正常范围时，则在 Variant 中的结果会提升到较大的数据类型。如 Byte 则提升到 Integer，Integer 则提升到 Long，而 Long和Single 则提升为 Double。当 Variant 变量中有 Currency、Decimal 及 Double 值超过它们各自的范围时，会发生错误。 
+适应性
+　　可以用 Variant 数据类型来替换任何数据类型，这样会更有适应性。如果 Variant 变量的内容是数字，它可以用字符串来表示数字或是用它实际的值来表示，这将由上下文来决定，例如： 
+　　Dim MyVar As Variant 
+　　MyVar = 98052 
+　　在前面的例子中，MyVar 内有一实际值为 98052 的数值。像期望的那样，算术运算子可以对 Variant 变量运算，其中包含数值或能被解释为数值的字符串数据。如果用 + 运算子来将 MyVar 与其他含有数字的 Variant 或数值类型的变量相加，结果便是一算术和。 
+　　Empty 值用来标记尚未初始化（给定初始值）的Variant 变量。内含 Empty 的 Variant 在数值的上下文中表示 0，如果是用在字符串的上下文中则表示零长度的字符串 ("")。 
+　　不应将 Empty 与 Null 弄混。Null 是表示 Variant 变量确实含有一个无效数据。 
+　　在 Variant 中，Error 是用来指示在过程中出现错误时的特殊值。然而，不像对其他种类的错误那样，程序并不产生普通的应用程序级的错误处理。这可以让程序员，或应用程序本身，根据此错误值采取另外的行动。可以用 CVErr 函数将实数转换为错误值来产生 Error 值。 
+变体类型Variant
+　　变体类型Variant，能够在运行期间动态的改变类型。变体类型能支持所有简单的数据类型，如整型、浮点、字符串、布尔型、日期时间、货币及OLE自动化对象等，不能够表达Object Pascal对象。 
+　　1.VarArrayCreate function 
+　　Creates a variant array. 
+　　创建一个变体类型的数组。 
+　　function VarArrayCreate(const Bounds: array of Integer; VarType: TVarType): Variant; 
+　　VarArrayOf function 
+　　Creates and fills a one-dimensional variant array. 
+　　创建并且填充一个一维的变体类型的数组。 
+　　function VarArrayOf(const Values: array of Variant): Variant; 
+　　VarArrayCreate, VarArrayOf Example 
+　　var 
+　　A: Variant; 
+　　begin 
+　　A := VarArrayCreate([0, 4], varVariant); 
+　　A[0] := 1; 
+　　A[1] := 1234.5678; 
+　　A[2] := 'Hello world'; 
+　　A[3] := True; 
+　　A[4] := VarArrayOf([1, 10, 100, 1000]); 
+　　WriteLn(A[2]); { Hello world } 
+　　WriteLn(A[4][2]); { 100 } 
+　　end; 
+　　2.VarArrayLock function 
+　　Locks a variant array and returns a pointer to the data. 
+　　锁住一个变体类型的数组并且返回一个指向这个数据的指针。 
+　　function VarArrayLock(const A: Variant): Pointer; 
+　　VarArrayLock, VarArrayUnlock Example 
+　　type 
+　　PArrayData = ^TArrayData; 
+　　TArrayData = array[0..9, 1..3] of Integer; 
+　　var 
+　　A: Variant; 
+　　P: PArrayData; 
+　　I, J: Integer; 
+　　begin 
+　　A := VarArrayCreate([1, 3, 0, 9], varInteger); 
+　　P := VarArrayLock(A); 
+　　try 
+　　for I := 0 to 9 do 
+　　for J := 1 to 3 do 
+　　P^[I, J] := J * 10 + I; 
+　　finally 
+　　VarArrayUnlock(A); 
+　　end; 
+　　WriteLn(A[1, 9]); { 19 } 
+　　WriteLn(A[3, 4]); { 34 } 
+　　end; 
+　　3.VarArrayUnlock procedure 
+　　Unlocks a variant array. 
+　　procedure VarArrayUnlock(var A: Variant); 
+　　VARIANT 数据类型在文件OAIDL.IDL中定义如下：struct tagVARIANT { 
+　　union { 
+　　struct __tagVARIANT { 
+　　VARTYPE vt; 
+　　WORD wReserved1; 
+　　WORD wReserved2; 
+　　WORD wReserved3; 
+　　union { 
+　　ULONGLONG ullVal; 
+　　LONGLONG llVal; 
+　　LONG lVal; 
+　　BYTE bVal; 
+　　SHORT iVal; 
+　　FLOAT fltVal; 
+　　DOUBLE dblVal; 
+　　VARIANT_BOOL boolVal; 
+　　_VARIANT_BOOL bool; 
+　　SCODE scode; 
+　　CY cyVal; 
+　　DATE date; 
+　　BSTR bstrVal; 
+　　IUnknown * punkVal; 
+　　IDispatch * pdispVal; 
+　　SAFEARRAY * parray; 
+　　BYTE * pbVal; 
+　　SHORT * piVal; 
+　　LONG * plVal; 
+　　LONGLONG * pllVal; 
+　　FLOAT * pfltVal; 
+　　DOUBLE * pdblVal; 
+　　VARIANT_BOOL *pboolVal; 
+　　_VARIANT_BOOL *pbool; 
+　　SCODE * pscode; 
+　　CY * pcyVal; 
+　　DATE * pdate; 
+　　BSTR * pbstrVal; 
+　　IUnknown ** ppunkVal; 
+　　IDispatch ** ppdispVal; 
+　　SAFEARRAY ** pparray; 
+　　VARIANT * pvarVal; 
+　　PVOID byref; 
+　　CHAR cVal; 
+　　USHORT uiVal; 
+　　ULONG ulVal; 
+　　INT intVal; 
+　　UINT uintVal; 
+　　DECIMAL * pdecVal; 
+　　CHAR * pcVal; 
+　　USHORT * puiVal; 
+　　ULONG * pulVal; 
+　　ULONGLONG * pullVal; 
+　　INT * pintVal; 
+　　UINT * puintVal; 
+　　struct __tagBRECORD { 
+　　PVOID pvRecord; 
+　　IRecordInfo * pRecInfo; 
+　　} __VARIANT_NAME_4; 
+　　} __VARIANT_NAME_3; 
+　　} __VARIANT_NAME_2; 
+　　DECIMAL decVal; 
+　　} __VARIANT_NAME_1; 
+　　}; 
+　　VARIANT数据结构包含两个域(如果不考虑保留的域)。vt域描述了第二个域的数据类型。为了使多种类型能够在第二个域中出现，我们定义了一个联合结构。所以，第二个域的名称随着vt域中输入值的不同而改变。用于指定vt域值情况的常量在联合的定义中以每一行的注释形式给出。 
+　　使用VARIANT和VARIANTARG数据结构要分两步完全。举一个例子，让我们考虑如下代码： 
+　　long lValue = 999; 
+　　VARIANT vParam; 
+　　vParam.vt = VT_I4; 
+　　vParam.lVal = lValue; 
+　　在第一行中指定数据类型。常量VT_I4表明在第二个域中将出现一个long型的数据。根据类型VARIANT的定义，可以得知，当一个long型数据存入VARIANT类型时，其第二个域使用的名称是lVal。 
+　　使用VARIANT来传递参数意味着非强类型语言(例如VBScript)能够调用使用强类型语言(C++)实现的方法。Invoke()方法的实现可以检查参数VARIANT封装的数值是否符合其正确的数据类型。如果符合，该类型将取出，并传递给调用方法。否则，Invoke()方法能够尝试使用 VariantChangeType()API函数来将该数值转换成正确的类型。 
+　　typedef unsigned short VARTYPE; 
+　　enum VARENUM 
+　　{ VT_EMPTY = 0, 
+　　VT_NULL = 1, 
+　　VT_I2 = 2, 
+　　VT_I4 = 3, 
+　　VT_R4 = 4, 
+　　VT_R8 = 5, 
+　　VT_CY = 6, 
+　　VT_DATE = 7, 
+　　VT_BSTR = 8, 
+　　VT_DISPATCH = 9, 
+　　VT_ERROR = 10, 
+　　VT_BOOL = 11, 
+　　VT_VARIANT = 12, 
+　　VT_UNKNOWN = 13, 
+　　VT_DECIMAL = 14, 
+　　VT_I1 = 16, 
+　　VT_UI1 = 17, 
+　　VT_UI2 = 18, 
+　　VT_UI4 = 19, 
+　　VT_I8 = 20, 
+　　VT_UI8 = 21, 
+　　VT_INT = 22, 
+　　VT_UINT = 23, 
+　　VT_VOID = 24, 
+　　VT_HRESULT = 25, 
+　　VT_PTR = 26, 
+　　VT_SAFEARRAY = 27, 
+　　VT_CARRAY = 28, 
+　　VT_USERDEFINED = 29, 
+　　VT_LPSTR = 30, 
+　　VT_LPWSTR = 31, 
+　　VT_RECORD = 36, 
+　　VT_INT_PTR = 37, 
+　　VT_UINT_PTR = 38, 
+　　VT_FILETIME = 64, 
+　　VT_BLOB = 65, 
+　　VT_STREAM = 66, 
+　　VT_STORAGE = 67, 
+　　VT_STREAMED_OBJECT = 68, 
+　　VT_STORED_OBJECT = 69, 
+　　VT_BLOB_OBJECT = 70, 
+　　VT_CF = 71, 
+　　VT_CLSID = 72, 
+　　VT_VERSIONED_STREAM = 73, 
+　　VT_BSTR_BLOB = 0xfff, 
+　　VT_VECTOR = 0x1000, 
+　　VT_ARRAY = 0x2000, 
+　　VT_BYREF = 0x4000, 
+　　VT_RESERVED = 0x8000, 
+　　VT_ILLEGAL = 0xffff, 
+　　VT_ILLEGALMASKED = 0xfff, 
+　　VT_TYPEMASK = 0xfff 
+　　} ; 
+　　VARIANT支持的类型，也就是vt成员的取值如表4-3所示。 
+　　 
+表4-3 VARIANT支持的类型
+类型名	含义
+VT_EMPTY	指示未指定值
+VT_NULL	指示空值（类似于 SQL 中的空值）
+VT_I2	指示 short 整数
+VT_I4	指示 long 整数
+VT_R4	指示 float 值
+VT_R8	指示 double 值
+VT_CY	指示货币值
+VT_DATE	指示 DATE 值
+VT_BSTR	指示 BSTR 字符串
+VT_DISPATCH	指示 IDispatch 指针
+VT_ERROR	指示 SCODE
+VT_BOOL	指示一个布尔值
+VT_VARIANT	指示 VARIANTfar 指针
+VT_UNKNOWN	指示 IUnknown 指针
+VT_DECIMAL	指示 decimal 值
+VT_I1	指示 char 值
+　（续表） 
+　　 
+类型名	含义
+VT_UI1	指示 byte
+VT_UI2	指示 unsignedshort
+VT_UI4	指示 unsignedlong
+VT_I8	指示 64 位整数
+VT_UI8	指示 64 位无符号整数
+VT_INT	指示整数值
+VT_UINT	指示 unsigned 整数值
+VT_VOID	指示 C 样式 void
+VT_HRESULT	指示 HRESULT
+VT_PTR	指示指针类型
+VT_SAFEARRAY	指示 SAFEARRAY
+VT_CARRAY	指示 C 样式数组
+VT_USERDEFINED	指示用户定义的类型
+VT_LPSTR	指示一个以 NULL 结尾的字符串
+VT_LPWSTR	指示由 nullNothingnullptrnull引用（在 Visual Basic 中为 Nothing） 终止的宽字符串
+VT_RECORD	指示用户定义的类型
+VT_FILETIME	指示 FILETIME 值
+VT_BLOB	指示以长度为前缀的字节
+VT_STREAM	指示随后是流的名称
+VT_STORAGE	指示随后是存储的名称
+VT_STREAMED_OBJECT	指示流包含对象
+VT_STORED_OBJECT	指示存储包含对象
+VT_BLOB_OBJECT	指示 Blob 包含对象
+VT_CF	指示剪贴板格式
+VT_CLSID	指示类 ID
+VT_VECTOR	指示简单的已计数数组
+VT_ARRAY	指示 SAFEARRAY 指针
+VT_BYREF	指示值为引
+

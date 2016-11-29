@@ -1,0 +1,32 @@
+Function Erl() As Long
+
+    VBA.Information 的成员
+
+    返回出现错误的行号
+=====================================
+URL=http://blog.163.com/iwannaitbe@yeah/blog/static/11278835620091020104240971/
+
+VB有一个隐藏函数ERL()。这个就是返回最近的错误行的。不过这个函数的使用是有条件的，即每一条代码都要有行号。如  ：
+
+Public   Sub   ErlTest()   
+        ON   Error   Goto   ErrHandle   
+        Dim   A   as   Integer     Public   Sub   ErlTest()   
+        ON   Error   Goto   ErrHandle   
+        Dim   A   as   Integer   
+  1       Msgbox   "现在还没有出错。"   
+  2       A=5/0   
+  3     Exit   Sub   
+  ErrHandle:   
+  5     Msgbox   "Error   found   at   "+Cstr(erl)   
+        Resume   Next   
+  End   Sub   
+    
+  1       Msgbox   "现在还没有出错。"   
+  2       A=5/0   
+  3     Exit   Sub   
+  ErrHandle:   
+  5     Msgbox   "Error   found   at   "+Cstr(erl)   
+        Resume   Next   
+  End   Sub   
+
+=====================================

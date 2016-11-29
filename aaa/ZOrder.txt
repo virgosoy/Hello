@@ -1,0 +1,68 @@
+将指定的 MDIForm，Form 或控件放置在其图层的z-顺序的前端或后端。不支持命名参数。
+
+语法
+
+object.ZOrder position
+
+ZOrder 方法的语法包含下列部分：
+
+部分 描述 
+object 可选的。一个对象表达式，其值为“应用于”列表中的一个对象。如果省略 object，则具有焦点的 Form 对象缺省为 object。 
+Position 可选的。一个整数，它用以指示 object 相对于同一 object 其它实例的位置。如果 position 为 0 或被省略，则 object 定位在Z-顺序前面。如果 position 为 1，则 object 定位在Z-顺序后面。 
+
+
+说明
+
+在设计时选择“编辑”菜单中的“置前”或“置后”菜单命令，可以设置对象的Z-顺序。
+
+在 MDIForm 对象内，Zorder 根据 position 的数值决定将 MDI子窗体放置到 MDI 客户区的前面或后面。对于 MDIForm 或 Form 对象，Zorder 根据 position 的数值决定将窗体放置到屏幕的前面或后面。因此，窗体可以显示在其它运行中的应用程序的前面或后面。
+
+有三个图层与窗体和容器相关联。后层是显示图形方法结果的绘图空间。下一个是中层，用来显示图形对象和 Label 控件。前层显示所有非图形控件，如 CommandButton、CheckBox 或 ListBox。靠近前层的层中包含的东西将覆盖该层后面的各层包含的东西。Zorder 只对该对象在其中显示的那一层内的各个对象进行重排。
+
+
+--------------------------------------------------------------------------------
+
+应用于：
+
+　
+
+CheckBox 控件
+
+ComboBox 控件
+
+CommandButton 控件
+
+Data 控件
+
+DirListBox 控件
+
+DriveListBox 控件
+
+FileListBox 控件
+
+Form 对象、Forms 集合
+
+Frame 控件
+
+HScrollBar、VScrollBar 控件
+
+Image 控件
+
+Label 控件
+
+Line 控件
+
+ListBox 控件
+
+MDIForm 对象
+
+OLE 容器控件
+
+OptionButton 控件
+
+PictureBox 控件
+
+Shape 控件
+
+TextBox 控件
+

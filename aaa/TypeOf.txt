@@ -1,0 +1,12 @@
+TypeOf objectname Is objecttype 形式的表达式。
+
+其中的objectname 是任何对象的引用，而objecttype 则是任何有效的对象类型。
+如果 objectname 是objecttype 所指定的一种对象类型，则表达式为 True，否则为False。
+=======================================
+eg:
+dim a as string
+if typeof a is string then'如果a是字符串则提示…
+msgbox "a是字符串类型"
+else
+msgbox "a不是字符串类型"
+end if

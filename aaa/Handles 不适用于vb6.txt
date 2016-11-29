@@ -1,0 +1,82 @@
+===========microsoft================
+Handles 子句 (Visual Basic)
+
+声明某个过程处理一个指定事件。 
+proceduredeclaration Handles eventlist
+-------部件-----------
+proceduredeclaration
+ 将处理事件的过程的 Sub 过程声明。 
+eventlist
+ 要处理的 proceduredeclaration 的事件的列表（用逗号分隔）。 此事件必须由当前类的基类或已使用 WithEvents 关键字声明的对象引发。
+-------备注-------------
+在过程声明结尾处使用 Handles 关键字将使其处理由使用 WithEvents 关键字声明的对象变量所引发的事件。 也可以在派生类中使用 Handles 关键字处理基类的事件。
+ 
+该过程的签名必须与 eventlist 中各事件的签名相匹配。 
+
+Handles 关键字和 AddHandler 语句都允许您指定特定过程处理特定事件，但有一些不同。 在定义过程以指定它处理特定事件时，请使用 Handles 关键字。 AddHandler 语句在运行时将过程连接到事件。 有关更多信息，请参见 AddHandler 语句。
+ 
+对于自定义事件，当它将过程添加为事件处理程序时，应用程序会调用该事件的 AddHandler 访问器。 有关自定义事件的更多信息，请参见 Event 语句。
+-----示例------------------
+Public Class ContainerClass
+    ' Module or class level declaration.
+    WithEvents Obj As New Class1
+
+    Public Class Class1
+        ' Declare an event.
+        Public Event Ev_Event()
+        Sub CauseSomeEvent()
+            ' Raise an event.
+            RaiseEvent Ev_Event()
+        End Sub
+    End Class
+
+    Sub EventHandler() Handles Obj.Ev_Event
+        ' Handle the event.
+        MsgBox("EventHandler caught event.")
+    End Sub
+
+    ' Call the TestEvents procedure from an instance of the ContainerClass 
+    ' class to test the Ev_Event event and the event handler.
+    Public Sub TestEvents()
+        Obj.CauseSomeEvent()
+    End Sub
+End Class
+
+ 
+下面的示例阐明了派生类如何使用 Handles 语句处理基类的事件。 
+
+
+
+Public Class BaseClass
+    ' Declare an event.
+    Event Ev1()
+End Class
+Class DerivedClass
+    Inherits BaseClass
+    Sub TestEvents() Handles MyBase.Ev1
+        ' Add code to handle this event.
+    End Sub
+End Class
+
+ 
+以下示例包含“WPF 应用程序” 的两个按钮事件处理程序。 
+
+
+
+Private Sub Button1_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles Button1.Click
+    MessageBox.Show(sender.Name & " clicked")
+End Sub
+
+Private Sub Button2_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles Button2.Click
+    MessageBox.Show(sender.Name & " clicked")
+End Sub
+
+ 
+下面的示例与前一个示例是等同的： Handles 子句中的 eventlist 包含这两个按钮的事件。 
+
+
+
+Private Sub Button_Click(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles Button1.Click, Button2.Click
+    MessageBox.Show(sender.Name & " clicked")
+End Sub
+=============================================

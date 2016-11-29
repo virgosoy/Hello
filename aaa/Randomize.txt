@@ -1,0 +1,8 @@
+语句名:Randomize
+ 　　功 能:初始化随机数发生器
+ 　　用 法:Randomize
+ 　　Randomize 语句示例
+ 　　本示例用 Randomize 语句初始化随机数生成器。由于忽略了数值参数， 所以 Randomize 用 Timer 函数的返回值作为新的随机数种子值。
+ 　　Dim MyValue
+ 　　Randomize ' 对随机数生成器做初始化的动作。
+ 　　MyValue = Int(6 * Rnd+1) ' 生成 1 到 7 之间(不包括7)的随机整数。

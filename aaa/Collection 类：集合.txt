@@ -1,0 +1,51 @@
+Collection
+Class Collection
+VBA 的成员
+类
+------------------------------
+★！！！注意：集合的数组下标从1开始，而不是0。
+-----------------------------
+
+事件：
+------------------
+Sub Add(Item, [Key], [Before], [After])
+VBA.Collection 的成员
+添加一个成员到一个 Collection 对象
+
+
+参数
+eItem		指定一个代表要添加到集合中的一个成员的任意类型的表达式。通常,这是一个对象, 但也可以是一个数值, 串或一个合法类型的成员。
+cKey		指定一个可用于访问集合成员的,代表关键串的, 可选的,唯一的, 字母 (字符类型) 表达式.cKey 是区分大小写的参数且不能为空或 NULL 值。   
+eBeforeItem|eAfterItem	指定代表新成员插入到集合中的另一个项的前面或后面位置的一个可选的表达式。
+			可以指定一个 eBeforeItem 或一个 eAfterItem 表达式但不能同时是两者。
+			该表达式可以是下面中的一种类型: 
+				数值型。eBeforeItem 和 eAfterItem 表达式必须有一个从 1 到集合的 count 属性之间的值。
+				字符串型。eBeforeItem 和 eAfterItem 表达式必须符合为引用项在插入集合时指定的 cKey。  
+			如果 eBeforeItem 和 eAfterItem 没有指出一个已存在的集合成员, 将产生一个错误。  
+--------------------
+Function Count() As Long
+
+VBA.Collection 的成员
+
+返回一个集合中的成员数
+----------------------
+Function Item(Index)
+VBA.Collection 的缺省成员
+返回由位置和关键字指定的 Collection 对象的成员
+
+---------------------
+Sub Remove(Index)
+VBA.Collection 的成员
+从一个集合对象中删除一个成员
+----------------------------
+Function _NewEnum() As Unknown
+VBA.Collection 的成员
+===================================
+类似于listbox的使用，定义：Dim 【变量】 as New Collection
+=======================================
+MSDN:
+
+集合对象的构成
+Collection 对象将每一项存储于 Variants 对象中。于是，能够添加到 Collection 对象里的内容列表就和能够存储到 Variants 中的内容列表是相同的。这包括标准数据类型、对象和数组－ 但不包括用户定义类型。
+不管 Variants 中存储的是什么，它都占 16 字节，因此使用 Collection 对象不如使用数组的效率高。然而，不能 ReDim 一个 Collection 对象，ReDim Collection 对象能够使代码更清楚、更容易维护。此外，集合对象按键（Key）能进行快速的查找，而数组却不能。
+=========================================

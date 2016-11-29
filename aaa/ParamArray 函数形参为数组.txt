@@ -1,0 +1,39 @@
+ParamArray
+
+===========================
+Eg:
+'ParamArray 用于过程最后的一个参数，表示该参数是包含任意个数元素的数组（Variant 类型）
+'ParamArray 不能与 ByVal、ByRef或 Optional 一起使用。
+Private Sub Command1_Click()
+   Dim d1 As Long, d2 As Long
+   d1 = My1(5, 1, 2)       '计算 5*(1+2)
+   d2 = My1(5, 1, 2, 3, 4) '计算 5*(1+2+3+4)
+End Sub
+
+Private Function My1(a As Long, ParamArray b()) As Long
+   Dim S1 As Long, S2 As Long
+   
+   S1 = LBound(b): S2 = UBound(b)
+   For I = S1 To S2
+      My1 = My1 + b(I)
+   Next
+   My1 = My1 * a
+End Function
+
+========================================
+函数可以直接返回一个数组啊！为什么大家还这么麻烦地用其他方法实现啊？
+★>>>>>>
+Public Function ds()
+     ds = Array(1,2,3,4,5)
+ End Function
+<<<<<★
+　　调用这个函数，正确地返回了一个数组，为什么大家用其他麻烦的方法啊？奇怪奇怪！
+
+Soy：直接一个数组等于也是可以的，不过调用的时候赋值的数组的类型必须与函数里面的数组类型相同，如下面的函数即为String
+★>>>>>
+Public Function ds()
+    dim d(6) as String
+    ds = d
+ End Function
+<<<<<★
+===========================================

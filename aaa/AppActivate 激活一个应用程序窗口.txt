@@ -1,0 +1,16 @@
+AppActivate
+===========VB============
+Sub AppActivate(Title, [Wait])
+
+    VBA.Interaction 的成员
+
+    激活一个应用程序窗口
+========================
+Eg:
+例如，运行记事本，放到后台，然后运行：
+>>>>>>>>>
+Private Sub Command1_Click()
+AppActivate "无标题 - 记事本"
+End Sub
+<<<<<<<<
+一点按钮，记事本就到前台了

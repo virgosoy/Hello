@@ -1,0 +1,62 @@
+Environ({envstring|number})
+
+Environ 函数 
+语法     Environ({envstring | number})   ， 返回 String，它关连于一个操作系统环境变量
+命名参数说明： 
+envstring 可选参数。包含一个环境变量名的字符串表达式。 
+number 可选参数。数值表达式，用来表示环境字符串在环境字符串表格中的数值顺序。number 参数可以是任意的数值表达式，不过在计算前，它会先转换为一个整数。   
+        如果在环境字符串表格中找不到 envstring，则会返回一个零长度字符串 (\"\")。如果找到，则 Environ 会返回一段文本，文本是赋值给指定的 envstring 的，也就是说，在环境字符串表格中对应那个环境变量的等号 (=) 后面的那段文本。 
+       如果指定了 number，则在环境字符串表格中相应位置上的字符串会返回。在这种情况下，Environ 会返回整个文本，包括 envstring。如果在指定位置上没有环境字符串，那么 Environ 会返回一个零长度字符串。
+
+number envstring 
+1 ALLUSERSPROFILE 
+2 APPDATA 
+3 CLIENTNAME 
+4 CommonProgramFiles 
+5 COMPUTERNAME 
+6 ComSpec 
+7 FP_NO_HOST_CHECK 
+8 HOMEDRIVE 
+9 HOMEPATH 
+10 LOGONSERVER 
+11 NUMBER_OF_PROCESSORS 
+12 OS 
+13 Path 
+14 PATHEXT 
+15 PROCESSOR_ARCHITECTURE 
+16 PROCESSOR_IDENTIFIER 
+17 PROCESSOR_LEVEL 
+18 PROCESSOR_REVISION 
+19 ProgramFiles 
+20 SESSIONNAME 
+21 SystemDrive 
+22 SystemRoot 
+23 TEMP 
+24 TMP 
+25 USERDOMAIN 
+26 USERNAME 
+27 USERPROFILE 
+28 windir 
+
+例如：
+Environ ("Windir") 'c:\windows Windows 目录
+Environ ("ProgramFiles") 'c:\ProgramFiles 应用程序文件夹
+Environ ("UserProfile") 'C:\Documents and Settings\Administrator 用户配置文件目录
+Environ ("ALLUSERSPROFILE") '局部 返回所有“用户配置文件”的位置。 
+Environ ("APPDATA") '局部 返回默认情况下应用程序存储数据的位置。 
+Environ ("COMPUTERNAME") '系统 返回计算机的名称。 
+Environ ("COMSPEC") '系统 返回命令行解释器可执行程序的准确路径。 
+Environ ("HOMEDRIVE") '系统 返回连接到用户主目录的本地工作站驱动器号。基于主目录值的设置。用户主目录是在“本地用户和组”中指定的。 
+Environ ("HOMEPATH") '系统 返回用户主目录的完整路径。基于主目录值的设置。用户主目录是在“本地用户和组”中指定的。 
+Environ ("NUMBER_OF_PROCESSORS") '系统 指定安装在计算机上的处理器的数目。 
+Environ ("OS") '系统 返回操作系统的名称。Windows 2000 将操作系统显示为 Windows_NT。 
+Environ ("PATH") '系统 指定可执行文件的搜索路径。 
+Environ ("PATHEXT") '系统 返回操作系统认为可执行的文件扩展名的列表。 
+Environ ("PROCESSOR_ARCHITECTURE") '系统 返回处理器的芯片体系结构。值: x86，IA64。 
+Environ ("PROCESSOR_LEVEL") '系统 返回计算机上安装的处理器的型号。 
+Environ ("PROCESSOR_LEVEL") '系统 返回处理器的版本号。 
+Environ ("SYSTEMDRIVE") '系统 返回包含 Windows XP 根目录（即系统根目录）的驱动器。 
+Environ ("SYSTEMROOT") '系统 返回 Windows XP 根目录的位置。 
+Environ ("TEMP") 'and %TMP") '系统和用户 返回对当前登录用户可用的应用程序所使用的默认临时目录。有些应用程序需要 TEMP，而其它应用程序则需要 TMP。 
+Environ ("USERDOMAIN") '局部 返回包含用户帐户的域的名称。 
+Environ ("USERNAME") '局部 返回当前登录的用户的名称。

@@ -1,0 +1,133 @@
+===================
+RSet
+描述：在一字符串变量中将一字符串往右对齐。
+一、语法：
+Rset stringvar = string
+
+RSet语句的语法包含下面部分：
+部分		描述 
+stringvar	必需的。为字符串变量名 
+string		必需的。在stringvar内想往右对齐的字符串表达式 
+
+二、说明：
+　　RSet会保留原stringvar内的字符串长度，如果string比stringvar内的字符串短，stringvar中多出的字符以空白替换，直至字符串开头；如果string比stringvar内的字符串长，RSet只在stringvar中放置长度为stringvar内的字符串长度的左边几个字符。
+
+注意：RSet不能用于用户定义类型。
+
+
+===========资料===============
+VB6中的LSet语句和RSet语句详解
+----------------------
+URL=http://www.jb51.net/article/52920.htm
+
+　　这篇文章主要介绍了VB6中的LSet语句和RSet语句详解,LSet语句和RSet语句不太常用,所以知道的人不多,需要的朋友可以参考下
+　　VB6中有几种长得很像的语句：Let、Set、LSet、RSet。
+　　Let用于一般变量的赋值：
+　　　　[Let] varname = expression
+
+　　大部分情况下我们都省略Let，直接用等号赋值，以致于不少人根本不知道Let的存在。
+　　Set用于对象的赋值，将变量指向对象并增加对象的引用计数，也有不少人不知道引用计数为何物。
+　　那么LSet是干什么用的呢？咋一看好像是Let和Set的结合体，其实不然。LSet中的L是Left的缩写，与之对应的是RLet。你问我怎么知道L是Left的缩写？文档上面写的呗：
+　　　　LSet Statement
+　　　　Left aligns a string within a string variable, or copies a variable of one user-defined type to another variable of a different user-defined type.
+　　　　RSet Statement
+　　　　Right aligns a string within a string variable.
+
+　　LSet比RSet多出一个功能，先不看这个，先看相同的部分，两者分别用来在一字符串变量中将一字符串往左对齐（右对齐）。什么意思呢？其实光看文档我也没不懂，实际测试一下好了：
+　　　　Sub Main()
+　　　　    Dim url As String
+　　　　    Dim s As String
+　　　　    
+　　　　    Let url = "http://www.jb51.net"
+　　　　    s = String$(20, "*")
+　　　　    
+　　　　    LSet s = url
+　　　　    Debug.Print s
+　　　　    
+　　　　    RSet s = url
+　　　　    Debug.Print s
+　　　　End Sub
+　　输出（注意空格）：
+　　　　http://www.jb51.net    
+　　　　     http://www.jb51.net
+　　的确是左对齐的右对齐，而且还多此一举的把我们的星号*替换成了空格，这有什么用呢？以我看来，似乎也许大概真的没什么用，不知道设计者是怎么想的。
+
+　　不过LSet的另一个功能却是很强大的，可以将一用户定义类型变量复制到另一用户自定义类型变量。这又是什么意思？
+
+　　还是举个例子来说明，IP地址知道吧？我这里ping百度返回的IP是61.135.169.125，这种格式的IP地址只是用来给人类看的，IP在计算机内部其实是用32位整数来表示。如何用VB将xxx.xxx.xxx.xxx格式的IP地址转成32位整数形式？一番Google之后，可以写出类似于这样的代码：
+　　　　Sub Main()
+　　　　    Debug.Print IPToLong("61.135.169.125")
+　　　　End Sub
+　　　　
+　　　　Private Function IPToLong(IPStr As String) As Long
+　　　　   Dim Str() As String, HEXStr As String, TempStr As String
+　　　　   Dim x As Long
+　　　　   
+　　　　   Str = Split(IPStr, ".")
+　　　　   HEXStr = ""
+　　　　   For x = 0 To UBound(Str)
+　　　　      TempStr = Hex(Str(x))
+　　　　      HEXStr = HEXStr & String(2 - Len(TempStr), "0") & TempStr
+　　　　   Next x
+　　　　   IPToLong = CLng("&H" & HEXStr)
+　　　　End Function
+　　代码可以正常工作，这没什么问题，不过我们可以用LSet语句写出更“高级”的代码：
+　　　　Private Type myBytes
+　　　　    B1 As Byte
+　　　　    B2 As Byte
+　　　　    B3 As Byte
+　　　　    B4 As Byte
+　　　　End Type
+　　　　
+　　　　Private Type myLong
+　　　　    Val As Long
+　　　　End Type
+　　　　
+　　　　'By Demon
+　　　　'http://jb51.net
+　　　　
+　　　　Public Function IP2Long(ip As String) As Long
+　　　　    Dim a() As String
+　　　　    Dim b As myBytes
+　　　　    Dim l As myLong
+　　　　    
+　　　　    a = Split(ip, ".")
+　　　　    '注意Little-Endian
+　　　　    b.B1 = CByte(a(3))
+　　　　    b.B2 = CByte(a(2))
+　　　　    b.B3 = CByte(a(1))
+　　　　    b.B4 = CByte(a(0))
+　　　　    LSet l = b
+　　　　    IP2Long = l.Val
+　　　　End Function
+　　用LSet将myBytes类型的变量复制到myLong类型的变量，很好很强大。看一下生成的汇编代码：
+　　　　00401A0E   lea     eax, dword ptr [ebp-0x20]   ; 变量b的地址
+　　　　00401A11   push    eax
+　　　　00401A12   lea     eax, dword ptr [ebp-0x14]   ; 变量l的地址
+　　　　00401A15   push    eax
+　　　　00401A16   push    0x4
+　　　　00401A18   call    __vbaCopyBytes              ;  jmp to MSVBVM60.__vbaCopyBytes
+　　调用的是MSVBVM60.DLL中的__vbaCopyBytes，第一个参数是需要复制的字节，第二个参数是目标地址，第三个参数是源地址，与C标准库中的memcpy函数类似，只不过参数的顺序不一样，其内部实现无非就是汇编中的串传送指令：
+　　　　72A1A0F3 >  mov     ecx, dword ptr [esp+0x4]
+　　　　72A1A0F7    push    esi
+　　　　72A1A0F8    mov     esi, dword ptr [esp+0x10]
+　　　　72A1A0FC    push    edi
+　　　　72A1A0FD    mov     edi, dword ptr [esp+0x10]
+　　　　72A1A101    mov     eax, ecx
+　　　　72A1A103    mov     edx, edi
+　　　　72A1A105    shr     ecx, 0x2
+　　　　72A1A108    rep     movs dword ptr es:[edi], dword ptr [esi]
+　　　　72A1A10A    mov     ecx, eax
+　　　　72A1A10C    mov     eax, edx
+　　　　72A1A10E    and     ecx, 0x3
+　　　　72A1A111    rep     movs byte ptr es:[edi], byte ptr [esi]
+　　　　72A1A113    pop     edi
+　　　　72A1A114    pop     esi
+　　　　72A1A115    retn    0xC
+　　需要注意的是文档中警告我们：
+　　　　Warning   Using LSet to copy a variable of one user-defined type into a variable of a different user-defined type is not recommended. Copying data of one data type into space reserved for a different data type can cause unpredictable results.
+　　　　When you copy a variable from one user-defined type to another, the binary data from one variable is copied into the memory space of the other, without regard for the data types specified for the elements.
+　　用LSet复制用户定义类型变量是不提倡的，这可能导致预料之外的结果（例如结构没有对齐），所以，除非你知道自己在做什么，否则不要使用LSet语句。
+
+
+

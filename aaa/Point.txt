@@ -1,0 +1,4 @@
+Function Point(X As Single, Y As Single) As Long
+
+VB.Form 的成员
+返回一个长整型值，作为 Form 或 PictureBox 对象上指定点的 RGB 颜色值。

@@ -1,0 +1,62 @@
+Clipboard.Clear		清空剪贴板
+Clipboard.GetData	返回剪贴板的数据	（函数）
+MyStr = Clipboard.GetText()
+Clipboard.SetText	复制到剪贴板		（语句）
+Clipboard.SetText data[, format]
+===============================
+获得文字直接用 
+Clipboard.GetText  
+获得图片可以用 
+Clipboard.GetData  
+
+设置文字直接用 
+Clipboard.SetText  
+设置图片可以用 
+Clipboard.SetData  
+
+清空 
+Clipboard.Clear  
+检测剪贴板中的内容 
+Clipboard.GetFormat(1) 
+返回True则文字 
+返回False则其他
+=====================================
+Clipboard 对象常数
+常数 值 描述 
+vbCFRTF -16639 Rich Text 格式（ rtf 文件） 
+vbCFLink -16640 DDE 对话信息 
+vbCFText 1 文本（.txt 文件） 
+vbCFBitmap 2 位图（.bmp 文件） 
+vbCFMetafile 3 元文件（.wmf 文件） 
+vbCFDIB 8 与设备无关的位图 
+vbCFPalette 9 调色板 
+vbCFEMetaFile 14 增强型图元文件（.emf 文件 ） 
+vbCFFiles 15 来自 Windows 资源管理器的文件列表 
+------------------------------------
+Clipboard 对象常数 （ActiveX 控件）
+常数 值 描述 
+vbCFLink &HBF00 DDE 对话信息 
+vbCFRTF &HBF01 Rich Text Format （.rtf文件） 
+vbCFText 1 文本 （.txt文件） 
+vbCFBitmap 2 位图 （.bmp文件） 
+vbCFMetafile 3 元文件 （.wmf文件） 
+vbCFDIB 8 与设备无关的位图 
+vbCFPalette 9 调色板 
+--------------------------
+Private Const CF_TEXT = 1
+Private Const CF_BITMAP = 2
+Private Const CF_METAFILEPICT = 3
+Private Const CF_SYLK = 4
+Private Const CF_DIF = 5
+Private Const CF_TIFF = 6
+Private Const CF_OEMTEXT = 7
+Private Const CF_DIB = 8
+Private Const CF_PALETTE = 9
+Private Const CF_PENDATA = 10
+Private Const CF_RIFF = 11
+Private Const CF_WAVE = 12
+Private Const CF_UNICODETEXT = 13
+Private Const CF_ENHMETAFILE = 14
+Private Const CF_HDROP = 15
+Private Const CF_LOCALE = 16
+Private Const CF_MAX = 17

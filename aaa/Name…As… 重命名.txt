@@ -1,0 +1,6 @@
+Name oldpathname As newpathname
+
+oldpathname 必要，String，指定已存在的文件、目录或文件夹，可以包含目录或文件夹以及驱动器。
+newpathname 必要，String，指定新的文件、目录或文件夹，可以包含目录或文件夹以及驱动器，而由newpathname所指定的文件名不能存在。
+
+改变名称之前先关闭打开的文件，否则将会参生错误。Name的参数不能使用*与?通配符。

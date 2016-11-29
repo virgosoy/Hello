@@ -1,0 +1,71 @@
+======vb=============
+Function CallByName(Object As Object, ProcName As String, CallType As VbCallType, Args() As Variant)
+
+VBA.Interaction 的成员
+
+Support IDispatch::Invoke
+
+
+========资料==============
+Public Function CallByName( _
+   ByVal ObjectRef As System.Object, _
+   ByVal ProcName As String, _
+   ByVal UseCallType As CallType, _
+   ByVal Args() As Object _
+) As Object
+参数
+ObjectRef
+必选。Object。指向公开属性或方法的对象的指针。
+ProcName
+必选。String。包含对象的属性名或方法名的字符串表达式。
+UseCallType
+必选。CallType 枚举类型的枚举成员，表示所调用过程的类型。CallType 的值可以是 Method、Get 或 Set。
+Args
+可选。ParamArray。参数数组，包含要传递给所调用的属性和方法的参数。
+
+UseCallType枚举
+Const VbMethod = 1	'调用事件
+Const VbGet = 2		'返回属性
+Const VbLet = 4		'设置属性值
+Const VbSet = 8		'设置object的属性值
+==========Soy例子=====================
+i = CallByName(Form1, "Move", VbMethod, 0, 0, 1500, 1500)		'调用Form1的Move，参数为0, 0, 1500, 1500。即移动Form到0,0大小为3000,3000缇
+i = CallByName(Text1, "Text", VbGet)		'返回Text1属性Text的值给i
+i = CallByName(Text1, "Text", VbLet, "a")	'设置Text1属性Text的值为"a"
+
+=============百度百科=============================
+异常
+　　异常类型 		错误号 	条件 
+　　ArgumentException 	5　　	无效 UseCallType 值；必须为 Method、Get 或 Set。 
+　　如果正在升级使用无结构错误处理的 Visual Basic 6.0 应用程序，请参见“错误号”一列。（您可以根据 Number 属性（Err 对象）比较错误号。）然而，如果可能，应当考虑用 Visual Basic 的结构化异常处理概述替换这种错误控制。
+
+备注
+CallByName 函数在运行时用来获取属性，设置属性或调用方法。 
+
+示例 
+　　在下面的示例中，第一行使用 CallByName 设置文本框的 Text 属性，第二行检索 Text 属性的值，第三行调用 Move 方法以移动文本框。 
+
+　　		' Imports statements must be at the top of a module. 
+　　Imports Microsoft.VisualBasic.CallType 
+
+　　Sub TestCallByName1() 
+　　		'Set a property. 
+　　CallByName(TextBox1, "Text", VbSet, "New Text") 
+　　		'Retrieve the value of a property. 
+　　MsgBox(CallByName(TextBox1, "Text", VbGet)) 
+　　		'Call a method. 
+　　CallByName(TextBox1, "Hide", VbMethod) 
+　　End Sub 
+
+　　下一个示例使用 CallByName 函数调用集合对象的 Add 和 Item 方法。 
+
+　　Public Sub TestCallByName2() 
+　　Dim col As New Collection() 
+　　		'Store the string "Item One" in a collection by 
+　　		'calling the Add method. 
+　　CallByName(col, "Add", VbMethod, "Item One") 
+　　		'Retrieve the first entry from the collection using the 
+　　		'Item property and display it using MsgBox(). 
+　　MsgBox(CallByName(col, "Item", VbGet, 1)) 
+　　End Sub
+==============================

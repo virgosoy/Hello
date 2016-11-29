@@ -1,0 +1,107 @@
+---------------------------------------------
+VB定长字符串 
+
+按照缺省规定，String 变量或参数是一个可变长度的字符串，随着对字符串赋予新数据，它的长度可增可减。 也可以声明字符串具有固定长度。可用以下语法声明一个定长字符串：
+
+String * size
+
+例如，为了声明一个长度为 50 字符的字符串，可用下列语句：
+Dim EmpName As String * 50
+
+
+如果赋予字符串的字符少于 50 个，则用空格将 EmpName 的不足部分填满。如果赋予字符串的长度太长，已不能成为定长字符串，则 Visual Basic 会直接截去超出部分的字符。
+
+因为定长字符串用空格填充尾部多余的空间，所以在处理定长字符串时可发现，删除空格的 Trim 和 RTrim 函数是很有用的。
+
+可将标准模块中的定长字符串声明为 Public 或 Private。在窗体和类模块中，必须将定长字符串声明为 Private。
+
+ 
+---------------------------------------------
+转换数据类型
+
+ Visual Basic 提供了几种转换函数，可用来将值转换成特定数据类型。例如，用 CCur 函数将值转换成 Currency 类型：
+PayPerWeek = CCur (hours * hourlyPay)
+
+
+转换函数 将表达式转换成 
+Cbool Boolean 
+Cbyte Byte 
+Ccur Currency 
+Cdate Date 
+CDbl Double 
+Cint Integer 
+CLng Long 
+CSng Single 
+CStr String 
+Cvar Variant 
+CVErr Error 
+
+ 
+
+注意 对目标数据类型，传递到转换函数的值必须是有效的，否则会发生错误。例如，如果想把 Long 型数转换成 Integer 型数，那么，Long 型数必须在 Integer 数据类型的有效范围之内。
+
+详细信息 在联机帮助中查找指定的转换函数。
+
+---------------------------------------------
+Variant 数据类型
+
+Variant 变量能够存储所有系统定义类型的数据。如果把它们赋予 Variant 变量，则不必在这些数据的类型间进行转换； Visual Basic 会自动完成任何必要的转换。例如：
+Dim SomeValue      '缺省为 Variant。
+SomeValue = "17"   'SomeValue包含 "17"（双字符的串）。
+SomeValue = SomeValue - 15       '现在， SomeValue 包含数值 2。
+SomeValue = "U" & SomeValue   '现在， SomeValue 包含 "U2" （双字符的串）。
+
+
+不必过多关注 Variant 变量中数据的类型就可对 Variant 变量进行操作，但须避免落入陷阱。 
+·如果对 Variant 变量进行数学运算或函数运算，则 Variant 必包含某个数。更详细的信息，请参阅《联机手册》中“高级变量主题”中的“变量中存储的 Numeric 值”部分。
+
+
+·如果正在连接两个字符串，则用 " & " 操作符而不用 " + " 操作符。更详细的信息，请参阅《联机手册》中“高级变量主题”中的“Variant 变量中存储的 Strings”部分。 
+
+除了可以像其它标准数据类型一样操作外，Variants 还包含三种特定值：Empty，Null 和 Error。
+
+---------------------------------------------
+Empty 值
+
+有时需要知道是否已将一个值赋予所创建的变量。在赋值之前，Variant 变量具有值 Empty。值 Empty 是异于0、零长度字符串 ("") 或 Null 值的特定值。可用 IsEmpty 函数测试 Empty 值：
+If IsEmpty (Z) Then Z = 0
+
+
+当 Variant 变量包含 Empty 值时，可在表达式中使用它；将其作为 0 或零长度字符串来处理，这要根据表达式来定。
+
+只要将任何值（包括 0、零长度字符串或 Null）赋予 Variant 变量，Empty 值就会消失。而将关键字 Empty 赋予 Variant 变量，就可将 Variant 变量恢复为 Empty。
+
+---------------------------------------------
+Null 值
+
+Variant 数据类型还可包含一特定值：Null。Null通常用于数据库应用程序，表示未知数据或丢失的数据。 由于在数据库中使用 Null 方法，Null 具有某些唯一的特性： 
+·对包含 Null 的表达式，计算结果总是 Null。于是说 Null 通过表达式“传播”；如果表达式的部分之值为 Null，那么整个表达式的值也为 Null。
+
+
+·将 Null 值、含 Null 的 Variant 变量或计算结果为 Null 的表达式作为参数传递给大多数函数，将会使函数返回 Null。
+
+
+·Null 值经由返回 Variant 数据类型的内在函数传播。 
+
+也可用 Null 关键字指定 Null 值。
+Z = Null
+
+
+也可用 IsNull 函数测试 Variant 变量是否包含 Null 值。
+If IsNull (X) And IsNull (Y) Then
+   Z = Null
+Else
+   Z = 0
+End If
+
+
+如果将 Null 值赋予 Variant 以外的任何其它类型变量，则将出现可以捕获的错误。而将 Null 值赋予 Variant 则不会发生错误，Null 将通过包含 Variant 变量的表达式传播（尽管 Null 并不通过某些函数来传播）。可以从任何具有 Variant 返回值的函数过程返回 Null。
+
+除非明确将 Null 赋予变量，否则变量不会设置成 Null 值，所以，如果不在应用程序中使用 Null，就不必书写测试 Null 和处理 Null 的程序。
+
+详细信息 关于如何在表达式中使用 Null 的详细信息，请参阅语言参考的“Null”部分。
+
+---------------------------------------------
+Error 值
+
+在 Variant 中，Error 是特定值，指出已发生的过程中的错误状态。但是，与其它类型错误不同，这里并未发生正常的应用程序级的错误处理。因此，程序员或应用程序本身可根据 Error 值进行取舍。利用 CVErr 函数将实数转换成错误值就可建立 Error 值。

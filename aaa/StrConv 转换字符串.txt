@@ -1,0 +1,245 @@
+===================VB==============================
+Function StrConv(String, Conversion As VbStrConv, [LocaleID As Long])
+
+    VBA.Strings 的成员
+
+    返回一个转换的字符串
+======================================================
+参数		类型及说明
+LocaleID	地区设置标识码
+		常数	说明	
+		&H402	韩文
+====================百度百科==================
+StrConv
+　　StrConv 函数 
+　　-------------------------------------------------------------------------------- 
+　　返回按指定类型转换的 Variant (String)。 
+　　语法 
+　　StrConv(string, conversion, LCID) 
+　　StrConv 函数的语法有下面的命名参数： 
+　　部分 说明 
+　　string 必要参数。要转换的字符串表达式。 
+　　conversion 必要参数。Integer。其值的和决定转换的类型。 
+　　LCID 可选的。如果与系统LocaleID不同，则为LocaleID（系统LocaleID为缺省值。） 
+　　设置值 
+　　conversion 参数的设置值为： 
+　　常数 		值 		说明 
+　　vbUpperCase 	1 	将字符串文字转成大写。 
+　　vbLowerCase 	2 	将字符串文字转成小写。 
+　　vbProperCase 	3 	将字符串中每个字的开头字母转成大写。 
+　　vbWide* 		4* 	将字符串中单字节字符转成双字节字符。 
+　　vbNarrow* 		8* 	将字符串中双字节字符转成单字节字符。 
+　　vbKatakana** 	16** 	将字符串中平假名字符转成片假名字符。 
+　　vbHiragana** 	32** 	将字符串中片假名字符转成平假名字符。 
+　　vbUnicode 		64 	根据系统的缺省码页将字符串转成 Unicode。 
+　　vbFromUnicode 	128 	将字符串由 Unicode 转成系统的缺省码页。 
+　　*应用到远东国别。 
+　　**仅应用到日本。 
+	Ps:缺省码页 = Ansi 字串
+　　注意 这些常数是由 VBA 指定的。可以在程序中使用它们来替换真正的值。其中大部分是可以组合的，例如 vbUpperCase + vbWide，互斥的常数不能组合，例如 vbUnicode + vbFromUnicode。当在不适用的国别使用常数 vbWide、vbNarrow、vbKatakana，和 vbHiragana 时，就会导致运行时错误。 
+　　下面是一些一般情况下的有效分界符：Null (Chr$(0))，水平制表符 (Chr$(9))，换行 (Chr$(10))，垂直制表符 (Chr$(11))，换页 (Chr$(12)) ，回车 (Chr$(13))，空白 (SBCS) (Chr$(32))。在 DBCS中，空白的实际值会随国家/地区而不同。 
+　　说明 
+　　在把 ANSI 格式的 Byte 数组转换为字符串时，您应该使用 StrConv 函数。当您转换 Unicode 格式的这种数组时，使用赋值语句。 
+　　StrConv 函数示例 
+　　本示例使用StrConv 函数来将Unicode 字符串转换成 ANSI 字符串。 
+　　Dim i As Long 
+　　Dim x() As Byte 
+　　x = StrConv("ABCDEFG", vbFromUnicode) ' 转换字符串。 
+　　For i = 0 To UBound(x) 
+　　Debug.Print x(i) 
+　　Next 
+　　-------------------------------------------------------------------------------- 
+　　相关基础知识： 
+　　命名参数 
+　　一参数，在对象库中预先定义了其名称。对每个参数，不必拘泥于语法所规定的特定顺序来提供值，而是只需按任何顺序用命名参数分配值。例如，假设一方法接受了三个参数： 
+　　DoSomeThing namedarg1, namedarg2, namedarg3 
+　　在对命名参数赋值时，可使用以下语句： 
+　　DoSomeThing namedarg3 := 4, namedarg2 := 5, namedarg1 := 20 
+　　注意，命名的参数不必按语法中安排的正规顺序出现。 
+　　字符串表达式 
+　　任何其值为一连串字符的表达式。字符串表达式的元素可包含返回字符串的函数、字符串文字、字符串常数、字符串变量、字符串 Variant 或返回字符串 Variant (VarType 8) 的函数。 
+　　Integer 数据类型 
+　　一种数据类型，将整型变量作为 2 字节整数存储起来，范围是 -32,768 到 32,767 之间的数字。Integer 数据类型也可表示列举值。在 Visual Basic 可用百分比符号 (%) 的类型声明字符来表示一个 Integer。 
+　　参数 
+　　传递给一个过程的常数、变量或表达式。 
+　　Unicode 
+　　国际标准化组织 (ISO) 字符标准。Unicode 使用 16 位 (2 字节) 编码方案，允许 65,536 个不同的字符空间。Unicode 包含标点符号、数学符号、修饰符号等的表示。 
+　　常数 
+　　执行程序时保持常数值的命名项目。常数可以是字符串、数值、另一常数、任何( 除乘幂与 Is 之外的) 算术运算符或逻辑运算符的组合。每个主应用程序皆可定义自己的一组常数。用户也可以 Const 语句定义附加常数。可在代码中的任何地方使用常数代替实际的值。 
+　　区域 
+　　关于国家/地区及其语言的信息集合。代码区域设置会影响关键字等术语的语言，也会定义区域专用设置，像小数点、日期格式、字符排序顺序等。 
+　　系统的区域设置会影响到判别区域的功能，例如，在显示数字或将字符串转换成日期时，可使用操作系统“控制面板”的实用程序来设置系统所在区域。 
+　　虽然代码区域和系统区域通常设置为相同的设置值，但在一些情况仍有不同之处。例如，在标准版 Visual Basic 和专业版 Visual Basic 中，并没有把代码从 English-U.S. 翻译过来。可以把系统区域设置成用户的语言和国家/地区，但总是将代码区域设置成 English-U.S.，而且不能改变。在这种情况下，将使用 English-U.S. 分隔符、格式占位符和排序次序。 
+　　运行时错误 
+　　在代码正在运行的时发生的错误。当一语句要进行非法操作时就会发生运行时错误。 
+　　Null 
+　　一个值，指示变量不含有效数据。 Null 是将 Null 显式赋值给一变量的结果，或者是包含 Null 的表达式之间的任何运算。 
+　　DBCS 
+　　使用 1 或 2 字节来表示一字符的字符集，超过个 256 字符也可表示。
+
+=========================不同文字编码的转换(Byte数组与String)=======================================
+
+    需要注意的是，在vb内部字符串是unicode表示的，而asc函数返回的是ascii和gbk编码。因此，asc函数返回的编码值与上面的byte数组返回的值可能是不同的。   
+
+ansi与GB2312、JIS的关系：
+    在中文和日文操作系统里生成的（txt和xml）文件的编码虽然都是ansi，但是，在简体中文系统下，ansi 编码代表 GB2312 编码，在日文操作系统下，ansi 编码代表 JIS 编码。不同 ansi 编码之间互不兼容，当信息在国际间交流时，无法将属于两种语言的文字，存储在同一段 ansi 编码的文本中。
+
+GBK包含GB2312:
+    这就是汉字的国标码，专门用来表示汉字，是双字节编码，而英文字母和iso8859-1一致（兼容iso8859-1编码）。其中gbk编码能够用来同时表示繁体字和简体字，而gb2312只能表示简体字，gbk是兼容gb2312编码的。
+GB2312：
+    此编码完全忽略了ASCII表中 127位后面的内容，127位前面的内容保留，如果两个字节同时大于127(7F)就认为这两个字节表示一个汉字，同时像标点、字母也都重新使用两个字节 定义了一遍，这就是我们经常说的 全角，这种方案可以表示6000种文字。
+GBK：
+    但是中国的文字太复杂6000个字也不够用，人们开始扩展GB2312，规定只要一个字节大于127，这个字节和后面的字节组合起来就代表一个汉字，这种编码成为GBK，于是又增加了20000多个汉字！
+
+UNICODE与GBK等两字节编码完全不兼容，无法找到一种简单的方式转换(只能使用查找表的方式)
+
+VB的UNICODE字符占2字节
+
+uft-8首位	unicode字符		UTF-8编码(x为unicode的位)
+00-7F	U-00000000 - U-0000007F:  0xxxxxxx  
+C0-DF	U-00000080 - U-000007FF:  110xxxxx 10xxxxxx  
+E0-EF	U-00000800 - U-0000FFFF:  1110xxxx 10xxxxxx 10xxxxxx  
+F0-F7	U-00010000 - U-001FFFFF:  11110xxx 10xxxxxx 10xxxxxx 10xxxxxx  
+F8-FB	U-00200000 - U-03FFFFFF:  111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx  
+FC-FD	U-04000000 - U-7FFFFFFF:  1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx  
+
+10xxxxxx范围 0x80-BF
+
+----------------------------------------------
+字符串与byte数组互相赋值：   
+  tbytes()=tstring   
+  tstring=tbytes()   
+---------------------------------------------    
+从ascii/gbk文本获得unicode数组(码)：   
+  tbytes()=strconv(tstring,vbunicode) 
+  Soy实验：strconv(,vbunicode)是gbk转unicode，如果字节小于等于127(&H7F)，则单字节转换为unicode；如果字节大于127(&H7F)，则与后面的一个字节一起转换为单个unicode文字，不需要手动判断。
+---------------------------------------------
+从unicode文本获得ascii/gbk数组：   
+  tbytes()=strconv(tstring,vbformunicode)   
+---------------------------------------------
+从汉字(unicode文本)获得Unicode码：
+  tinteger=AscW(tstring)
+  （AscW()函数返回值为负的时候，应加上65536 才得到汉字实际的Unicode码）
+----------------------------------------------------------
+从Unicode码获得汉字(unicode文本)：
+  tstrin=ChrW(tinteger)
+----------------------------------------------------------
+从汉字(unicode文本)获得AscII码：
+  tinteger=Asc(tstring)
+  （Asc()函数返回值为负的时候，应加上65536 才得到汉字实际的AscII码）
+------------------------------------------------------
+从AscII码获得汉字(unicode文本)：
+  tstring=Chr(tinteger)
+------------------------------------------------------
+从ascii/gbk数组获得unicode文本：   
+  tstring=strconv(tbytes(),vbunicode)   
+-----------------------------------------------------
+从unicode数组获得ascii/gbk文本：   
+  tstring=strconv(tbytes(),vbformunicode)   
+----------------------------------------------------------
+从UTF-8数组获得unicode文本：   
+  tstring=Utf8ToUnicode(tbytes())
+
+'UTF-8数组转Unicode模块：
+Private Declare Function MultiByteToWideChar Lib "kernel32" (ByVal CodePage As Long, ByVal dwFlags As Long, ByVal lpMultiByteStr As Long, ByVal cchMultiByte As Long, ByVal lpWideCharStr As Long, ByVal cchWideChar As Long) As Long
+Private Const CP_UTF8 = 65001
+
+Function Utf8ToUnicode(ByRef Utf() As Byte) As String
+    Dim lRet As Long
+    Dim lLength As Long
+    Dim lBufferSize As Long
+    lLength = UBound(Utf) - LBound(Utf) + 1
+    If lLength <= 0 Then Exit Function
+    lBufferSize = lLength * 2
+    Utf8ToUnicode = String$(lBufferSize, Chr(0))
+    lRet = MultiByteToWideChar(CP_UTF8, 0, VarPtr(Utf(0)), lLength, StrPtr(Utf8ToUnicode), lBufferSize)
+    If lRet <> 0 Then
+        Utf8ToUnicode = Left(Utf8ToUnicode, lRet)
+    Else
+        Utf8ToUnicode = ""
+    End If
+End Function
+---------------------------------------------------------------
+从Unicode文本获得UTF-8的EncodeURI文本
+  tstring2 = UTF8EncodeURI(tstring1)
+
+'Unicode转UTF-8EncodeURI模块
+Public Function UTF8EncodeURI(szInput) '转成utf-8编码函数
+    Dim wch, uch, szRet
+    Dim x
+    Dim nAsc, nAsc2, nAsc3
+    If szInput = "" Then
+        UTF8EncodeURI = szInput
+        Exit Function
+    End If
+    For x = 1 To Len(szInput)
+        wch = Mid(szInput, x, 1)
+        nAsc = AscW(wch)
+        If nAsc < 0 Then nAsc = nAsc + 65536
+        If (nAsc And &HFF80) = 0 Then
+            szRet = szRet & wch
+        Else
+            If (nAsc And &HF000) = 0 Then
+                uch = "%" & Hex(((nAsc \ 2 ^ 6)) Or &HC0) & Hex(nAsc And &H3F Or &H80)
+                szRet = szRet & uch
+            Else
+                uch = "%" & Hex((nAsc \ 2 ^ 12) Or &HE0) & "%" & _
+                Hex((nAsc \ 2 ^ 6) And &H3F Or &H80) & "%" & _
+                Hex(nAsc And &H3F Or &H80)
+                szRet = szRet & uch
+            End If
+        End If
+    Next
+    UTF8EncodeURI = szRet
+End Function
+
+=========================例子=========================================
+[VB]byte数组和string相互转换
+-----------------------------------------
+在vb里，byte数组和string可以互相赋值，利用这个特性处理字符串非常方便。   
+    
+  如果是处理大量文本，以下用法应该熟悉。   
+    
+  字符串与byte数组互相赋值：   
+  tbytes()=tstring   
+  tstring=tbytes()   
+    
+  需要注意的是，在vb内部字符串是unicode表示的，而asc函数返回的是ascii和gbk编码。因此，asc函数返回的编码值与上面的byte数组返回的值可能是不同的。   
+    
+  从ascii/gbk文本获得unicode数组：   
+  tbytes()=strconv(tstring,vbunicode)   
+    
+  从unicode文本获得ascii/gbk数组：   
+  tbytes()=strconv(tstring,vbformunicode)   
+    
+  从ascii/gbk数组获得unicode文本：   
+  tstring=strconv(tbytes(),vbunicode)   
+    
+  从unicode数组获得ascii/gbk文本：   
+  tstring=strconv(tbytes(),vbformunicode)   
+    
+  快速读取文本文件：   
+    
+  将文本文件整个读到byte数组：   
+  dim   tbytes()   as   byte   
+  tfn=freefile   
+  open   pfilename   for   binary   as   #tfn   
+      tfilesize=lof(#tfn)   
+      redim   tbytes(tfilesize-1)   
+      get   #tfn,1,tbytes()   
+  close   #tfn   
+  tstring=strconv(tbytes(),vbunicode)   从文件获得数组转换为带换行的多行文本字符串。   
+    
+  反之，如果将字符串文本写为二进制文件，则要：   
+  dim   tbytes()   as   byte   
+  tbytes()=strconv(tstring,vbformunicode)   
+    
+  tfn=freefile   
+  open   pfilename   for   output   as   #tfn   清除文件内容   
+  close   #tfn   
+  open   pfilename   for   binary   as   #tfn   
+      put   #tfn,1,tbytes()   
+  close   #tfn   
+    
+  另外，还可以用api函数copymemory将byte数组转换为integer数组，在利用查表法进行内码转换、简繁转换时，该操作尤为重要。因为，在vb当中，每个“字”的编码都是16位unicode，用integer数组表示最为直观。但integer数组不能直接与string赋值，因此需要一个与byte数组转换的过程。   
+

@@ -1,0 +1,40 @@
+Const vbNullString = ""
+
+VBA.Constants 的成员
+当调用一个外部过程，需要一个非零值的字符串时，所使用的常数
+
+▲注意，与单纯的""空字符串不同，传入API时会返回意料之外的值。需正确使用vbNullString。
+===========================================
+空字符串（也就是一个字符串也没有，甚至没有字符串自身的描述，本质上是一个常数0）
+--------------------------------------
+vbnullstring是一个4字节的空值，传输进api中一般要这样  0&  
+---------------------------------------
+字符串的本质问题。
+字符串是由两部分组成：一个指针和一个Unicode字符数组
+vbNullString就是一个只有第一部分而没有第二部分的字符串 
+-----------------------------------
+ByVal lpString As String
+
+此时你传入0的话，VB会自动把你的0变成"0",再把这个字符串指针传给API，也就是说你传入的不是空串了。所以在VB里面字符串传入空串时要特别用vbNullString这个“字符串常数”。
+
+当然，还可以用另外一种方式来理解，把声明改为：
+ByVal lpString As Long
+再传入0就OK了
+
+另外，我觉得很多人传0时这样写0&,没必要，因为0进行有符号扩展后还是0，编译器还没笨到这个程度：因为你少写一个&而需要插入多余的其它代码
+
+试试下面的实例：
+Option Explicit
+
+Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
+Private Declare Function FindWindow_Long Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As Long) As Long
+
+Private Sub Form_Load()
+    Dim hwnd1 As Long, hwnd2 As Long
+    hwnd1 = FindWindow("Notepad", vbNullString)
+    hwnd2 = FindWindow_Long("Notepad", 0)
+    Debug.Print hwnd1, hwnd2
+    Stop
+    End
+End Sub 
+========================================

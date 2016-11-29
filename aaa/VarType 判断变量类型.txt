@@ -1,0 +1,98 @@
+VarType
+--------VB-----------------
+Function VarType(VarName) As VbVarType
+
+    VBA.Information 的成员
+
+    返回一个值指示变量的子类型
+-----------------------------
+Enum VbVarType
+
+    VBA 的成员
+
+    预定义常数
+
+    vbEmpty = 0
+    vbNull = 1
+    vbInteger = 2
+    vbLong = 3
+    vbSingle = 4
+    vbDouble = 5
+    vbCurrency = 6
+    vbDate = 7
+    vbString = 8
+ 'TypeName = "String"
+    vbObject = 9
+    vbError = 10 'TypeName = "Error"
+    vbBoolean = 11
+    vbVariant = 12
+    vbDataObject = 13
+    vbDecimal = 14
+    vbByte = 17 '(&H11)
+    vbUserDefinedType = 36 '(&H24)
+    vbArray = 8192 '(&H2000)
+
+'以下为运算结果：数组vbArray与其他类型的结合：例子：
+    vbArray Or vbLong = 8195 'TypeName = "Long()"
+    vbArray Or vbVariant = 8204 'TypeName = "Variant()"，IsArray = True
+
+================其他相关函数=====================
+Function TypeName(VarName) As String
+
+    VBA.Information 的成员
+
+    返回一个提供变量信息的字符串
+----------------------------------------------------
+Function IsArray(VarName) As Boolean
+
+    VBA.Information 的成员
+    如果变量为一个数组，返回 True
+
+-----------------------------------------------------
+Function IsDate(Expression) As Boolean
+
+    VBA.Information 的成员
+
+    如果能够将表达式转换成日期型，返回 True
+
+------------------------------------------------
+Function IsEmpty(Expression) As Boolean
+
+    VBA.Information 的成员
+
+    如果变量未初始化，返回 True
+
+-----------------------------------------
+Function IsError(Expression) As Boolean
+
+    VBA.Information 的成员
+
+    如果表达式的值错误，返回 True
+
+---------------------------------------------
+Function IsMissing(ArgName) As Boolean
+
+    VBA.Information 的成员
+
+    如果未传送可选参数，返回 True
+
+---------------------------------------------
+Function IsNull(Expression) As Boolean
+
+    VBA.Information 的成员
+
+    如果表达式包含一个无效的数据，返回 True
+
+-------------------------------------------------
+Function IsNumeric(Expression) As Boolean
+
+    VBA.Information 的成员
+
+    如果能够将表达式转换成数值型，返回 True
+
+----------------------------------------------
+Function IsObject(Expression) As Boolean
+
+    VBA.Information 的成员
+
+    如果标识符表示一个对象变量返回 True

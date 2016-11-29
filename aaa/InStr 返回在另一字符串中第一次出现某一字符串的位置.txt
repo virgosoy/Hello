@@ -1,0 +1,71 @@
+InStr()
+
+====vb==========
+Function InStr([Start], [String1], [String2], [Compare As VbCompareMethod = vbBinaryCompare])
+
+VBA.Strings 的成员
+返回在另一字符串中第一次出现某一字符串的位置
+===============
+
+返回 Variant (Long)，指定一字符串在另一字符串中最先出现的位置。
+
+语法 
+
+InStr([start, ]string1, string2[, compare])
+
+InStr 函数的语法具有下面的参数：
+
+部分 说明 
+start 可选参数。为数值表达式，设置每次搜索的起点。如果省略，将从第一个字符的位置开始。如果 start 包含 Null，将发生错误。如果指定了 compare 参数，则一定要有 start 参数。 
+string1 必要参数。接受搜索的字符串表达式。 
+string2 必要参数。被搜索的字符串表达式。 
+Compare 可选参数。指定字符串比较。如果 compare 是 Null，将发生错误。如果省略 compare，Option Compare 的设置将决定比较的类型。 
+
+
+设置
+
+ compare 参数设置为：
+
+常数 值 描述 
+vbUseCompareOption -1 使用Option Compare 语句设置执行一个比较。 
+vbBinaryCompare 0 执行一个二进制比较。 
+vbTextCompare 1 执行一个按照原文的比较。 
+vbDatabaseCompare 2 仅适用于Microsoft Access，执行一个基于数据库中信息的比较。 
+
+
+返回值
+
+
+如果 			InStr返回 
+string1 为零长度 	0 
+string1 为 Null 	Null 
+string2 为零长度 	Start 
+string2 为 Null 	Null 
+string2 找不到 		0 
+在 string1 中找到string2  找到的位置 
+start > string2 	0 
+
+
+说明
+
+InStrB 函数作用于包含在字符串中的字节数据。所以 InStrB 返回的是字节位置，而不是字符位置。
+
+InStr 函数示例
+本示例使用 InStr 函数来查找某字符串在另一个字符串中首次出现的位置。
+
+Dim SearchString, SearchChar, MyPos
+SearchString ="XXpXXpXXPXXP"   ' 被搜索的字符串。
+SearchChar = "P"   ' 要查找字符串 "P"。
+
+' 从第四个字符开始，以文本比较的方式找起。返回值为 6（小写 p）。
+' 小写 p 和大写 P 在文本比较下是一样的。
+MyPos = Instr(4, SearchString, SearchChar, 1)   
+
+' 从第一个字符开使，以二进制比较的方式找起。返回值为 9（大写 P）。
+' 小写 p 和大写 P 在二进制比较下是不一样的。
+MyPos = Instr(1, SearchString, SearchChar, 0)
+
+' 缺省的比对方式为二进制比较（最后一个参数可省略）。
+MyPos = Instr(SearchString, SearchChar)   ' 返回 9。
+
+MyPos = Instr(1, SearchString, "W")   ' 返回 0。

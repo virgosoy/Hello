@@ -1,0 +1,5 @@
+Function IsArray(VarName) As Boolean
+
+    VBA.Information 的成员
+
+    如果变量为一个数组，返回 True

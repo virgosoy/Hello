@@ -1,0 +1,5 @@
+Const vbNullChar = ""
+
+    VBA.Constants 的成员
+
+    用于单个 Null 字符的 Basic 常数 (ASCII value 0); 等效于 Chr$(0)

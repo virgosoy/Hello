@@ -1,0 +1,47 @@
+=======microsoft===========
+AddHandler 语句
+在运行时将事件与事件处理程序相关联。 
+AddHandler event, AddressOf eventhandler
+--------部件-----------
+event
+ 要处理的事件的名称。 
+eventhandler
+ 将处理事件的过程的名称。 
+---------------备注--------
+AddHandler 和 RemoveHandler 语句使您可以在程序执行过程中的任何时候启动和停止事件处理。 
+
+eventhandler 过程的签名必须与事件 event 的签名相匹配。 
+
+Handles 关键字和 AddHandler 语句都允许您指定特定过程处理特定事件，但有一些不同。 AddHandler 语句在运行时将过程连接到事件。 在定义过程以指定它处理特定事件时，请使用 Handles 关键字。 有关更多信息，请参见 Handles 子句 (Visual Basic)。
+ 
+说明
+ 对于自定义事件，AddHandler 语句将调用事件的 AddHandler 访问器。 有关自定义事件的更多信息，请参见 Event 语句。 
+--------------示例---------
+Sub TestEvents()
+    Dim Obj As New Class1
+    ' Associate an event handler with an event.
+    AddHandler Obj.Ev_Event, AddressOf EventHandler
+    ' Call the method to raise the event.
+    Obj.CauseSomeEvent()
+    ' Stop handling events.
+    RemoveHandler Obj.Ev_Event, AddressOf EventHandler
+    ' This event will not be handled.
+    Obj.CauseSomeEvent()
+End Sub
+
+Sub EventHandler()
+    ' Handle the event.
+    MsgBox("EventHandler caught event.")
+End Sub
+
+Public Class Class1
+    ' Declare an event.
+    Public Event Ev_Event()
+    Sub CauseSomeEvent()
+        ' Raise an event.
+        RaiseEvent Ev_Event()
+    End Sub
+End Class
+===========================================
+
+

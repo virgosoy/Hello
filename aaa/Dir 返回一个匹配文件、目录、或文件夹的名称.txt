@@ -1,0 +1,35 @@
+Dir
+==================VB=======================
+Function Dir([PathName], [Attributes As VbFileAttribute = vbNormal]) As String
+
+    VBA.FileSystem 的成员
+
+    返回一个匹配文件、目录、或文件夹的名称
+======================例子======================
+VB判断一个文件或者文件夹是否存在
+------------------------------
+在VB中编程中，经常需要判断一个文件是否存在，以便执行相应的操作，这可用下列语句进行判断
+Dir([pathname],[Attributes as VbFileAttribute=vbNormal]) As String 
+解释： pathname:文件的绝对路径； 
+        Attributes：文件的属性。  
+       “[]”内为可选项。dir(file)=""表示文件不存在，dir(file)<>""表示文件存在。  
+1.例如判断c:\6331905.exe是否存在，如存在，就调用它，可用下列语句：  
+if dir("c:\6331905.exe")<>"" then
+shell "c:\6331905.exe"
+end if
+
+2.但如果判断的文件是隐藏文件,上面的语句则无法判断出来,这时就需要加上后面的可选项目,例如 
+   判断C盘根目录下是否有隐藏文件6331905.exe，就用下面的源代码：  
+if dir("c:\6331905.exe,vbhidden")<>"" then
+msgbox"发现 c:\6331905.exe" 
+end if
+  
+3.判断文件夹是否存在，可用下列语句：  
+Private Sub Command1_Click()
+If Dir("c:\6331905", vbDirectory) <> "" Then '如果c:\6331905文件夹存在
+MsgBox "文件夹：c:\6331905 存在！" '提示
+Else '否则
+MkDir "c:\6331905" '创建c:\6331905文件夹
+'如果是缺省路径,如：mkdir "6331905",在当前目录下创建一个文件夹，名为6331905
+End If
+End Sub

@@ -1,0 +1,40 @@
+VB中Dictionary如何使用
+---------------------------
+Private Sub Command1_Click()
+Dim TblMap_Card  As New Dictionary
+ 
+TblMap_Card.Add "Table", "Cards"     '前面是 Key 后面是 Value
+TblMap_Card.Add "Serial", "serialno"
+TblMap_Card.Add "Number", "surface"
+ 
+ 
+MsgBox TblMap_Card.Item("Table")
+ 
+End Sub
+-------------------------------
+Private Sub Command1_Click()
+Dim TblMap_Card              '创建一个变量 
+Set TblMap_Card = CreateObject("Scripting.Dictionary") 
+ 
+TblMap_Card.Add "Table", "Cards"     '前面是 Key 后面是 Value
+TblMap_Card.Add "Serial", "serialno"
+TblMap_Card.Add "Number", "surface"
+ 
+ 
+MsgBox TblMap_Card.Item("Table")
+ 
+End Sub
+-----------------------------------
+Dictionary与数组的关系问题.其区别是什么？：
+ 数组是最基本数据类型的：内存占用最小的一种。
+Dictionary则要复杂的多，但是也有很多好处：最常用的，就是可以飞快的查找一条记录：
+
+
+TblMap_Card.Add "Table", "Cards"     '前面是 Key 后面是 Value
+ TblMap_Card.Add "Serial", "serialno"
+ TblMap_Card.Add "Number", "surface"
+
+
+这个例子里面：就可以用key来定位第一条记录：TblMap_Card.Item("Table")
+
+数组当然没有这个功能了。

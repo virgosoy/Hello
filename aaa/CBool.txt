@@ -1,0 +1,23 @@
+描述
+
+返回表达式，此表达式已转换为 Boolean 子类型的 Variant。
+--------------
+语法
+
+CBool(expression) 
+expression 是任意有效的表达式。
+---------------------
+说明
+
+如果 expression 是零，则返回 False；否则返回 True。如果 expression 不能解释为数值，则将发生运行时错误。
+-------------------------
+示例
+
+下面的示例使用 CBool函数将一个表达式转变成 Boolean类型。如果表达式所计算的值非零，则 CBool函数返回 True；否则返回 False。
+ 　　Dim A, B As Integer
+ 　　Dim Check As Boolean
+ 　　A = 5
+ 　　B = 5 ' 初始化变量
+ 　　Check = CBool(A = B) 'Check设为 True
+ 　　A = 0 '定义变量
+ 　　Check = CBool(A) 'Check设为 False

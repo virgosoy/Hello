@@ -1,0 +1,24 @@
+SavePicture 语句
+   
+
+从对象或控件（如果有一个与其相关）的 Picture 或 Image 属性中将图形保存到文件中。
+
+语法
+
+SavePicture picture, stringexpression
+
+SavePicture 语句的语法包含下面部分：
+
+参数                    描述 
+picture            产生图形文件的 PictureBox 控件或 Image 控件。 
+stringexpression   欲保存的图形文件名。 
+
+说明
+
+无论在设计时还是运行时图形从文件加载到对象的 Picture 属性，而且它是位图、图标、元文件或增强元文件，则图形将以原始文件同样的格式保存。如果它是 GIF 或 JPEG 文件，则将保存为位图文件。
+
+Image 属性中的图形总是以位图的格式保存而不管其原始格式。
+
+
+SavePicture Me.Picture, "c:\test.bmp"           '保存窗体中的图像
+SavePicture Picture1.Picture, "c:\test.bmp"     '保存picturebox控件中的图像

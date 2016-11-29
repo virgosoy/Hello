@@ -1,0 +1,35 @@
+VB中有三种能存图片的对象，分别为Picture对象、stdPicture、IPictureDisp。这三种好像差不多，但是奇怪的是以下语句：Dim a As Picture，VB中的智能提示居然无法提示出Picture，但这段代码是不错的。偶很想知道这三个对象之间的异同，如果存图片最好用哪一个？还请高手解答，谢谢! 
+-----------------------------------
+Picture 对象
+            
+
+将位图、图标、元文件、增强元文件、GIF 和 JPEG 等各类图像赋值给具有 Picture 属性的对象，可以用 Picture 对象来操纵它们。
+
+ 语法
+
+Picture
+
+说明
+
+ 经常使用能显示图形对象的 Picture 属性标识一个 Picture 对象（例如 Form 对象或 PictureBox 控件）。假设有一个名为 Picture1 的 PictureBox 控件，用 Set 语句可将一个 Picture 对象设置成与另一个相等，示例如下：
+
+Dim X As Picture
+ Set X = LoadPicture("PARTY.BMP")
+ Set Picture1.Picture = X
+
+利用一个 Picture 对象的数组便可以在内存中保存一系列图形，而不必利用包含多个 PictureBox 或 Image 控件的窗体。
+
+ 不能这样来创建一个 Picture 对象：Dim X As New Picture。如果需要创建一个 Picture 对象，就必须利用 StdPicture 对象，例如：
+
+Dim X As New StdPicture
+--------------------
+Picture、stdPicture、IPictureDisp，还有一个关键的IPicture（在对象浏览器中打开“显示隐含成员”后，可看到），四个东西的确有些让人眼花。它们有着深刻的COM渊源，我觉得分清它们意义并不算很重要，MSDN也没有刻意划清它们的界线，提及时多使用了一些含糊的词语。也许MS认为，做为COM外壳的VB，没必要过于深入去了解COM的内部实现过程吧！
+
+ 按照MSDN的解释可见：stdPicture是核心类(Class)，其接口(implements)有简单与复杂两种界面(interfaces)，即Picture与IPicture，默认界面就是Picture，所以将对象类型指定为stdPicture或Picture基本是一回事，可能是考虑兼容或防止名称混淆的因素，对象游览器中是以IPictureDisp代替Picture出现了。其中具体原因说不清楚，MSDN中也以一句“Don’t ask why”来回答！，两个名称均可使用。
+
+ 总结一下：IPictureDisp与Picture是相同的，而Picture是stdPicture类的默认界面，stdPicture类的另一个界面就是IPicture，它提供了更多的属性与方法。只有stdPicture可用New来创建。
+------------------------
+我感觉stdpicture是为了兼容ole对象使用的，IPictureDisp是原生的图形
+ 基础类，stdpicture在它基础上扩展了些能兼容ole的标准，picture则是个属性，
+ 其实实际类就是ipicturedisp，至于ipicture则是一个更高级的类，
+ 既然兼容ole也能进行一些picture控件的操作。 

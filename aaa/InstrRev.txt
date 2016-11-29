@@ -1,0 +1,50 @@
+Soy：从后向前搜索，第一个配对的字符串的位置。Start为在第Start个字符向前搜索。
+========百度百科==============
+InstrRev
+
+-------------描述------------------
+　　返回某字符串在另一个字符串中最后出现的位置。 
+　　语法 
+　　InstrRev(string1, string2[, start[, compare]]) 
+　　InstrRev 函数的语法有以下参数： 
+　　参数 
+　　string1 
+　　必选项。接受搜索的字符串表达式。 
+　　string2 
+　　必选项。被搜索的字符串表达式。 
+　　Start 
+　　可选项。数值表达式，用于设置每次搜索的开始位置。如果省略，则默认值为 -1，表示从最后一个字符的位置开始搜索。如果 start 包含 Null，则出现错误 
+　　compare 
+　　可选项。在计算子字符串时，指示要使用的比较类型的数值。如果省略，将执行二进制比较。有关数值，请参阅“设置”部分。 
+
+--------------设置---------
+　　compare 参数可以有以下值： 
+　　 
+常数			Value	描述
+vbBinaryCompare		0	执行二进制比较。
+vbTextCompare 		1 	执行文本比较。
+vbDatabaseCompare 	2 	执行基于包含在数据库（在此数据库中执行比较）中的信息的比较。 
+
+-----------------返回值----------------
+　　InStrRev 返回以下值： 
+　　 
+如果				InStrRev 返回
+string1 为零长度		0
+string1 为 Null			Null
+string2 为零长度		start
+string2 为 Null			Null
+string2 没有找到		0
+在 string1 中找到 string2	找到匹配字符串的位置
+start > Len(string2)		0
+
+说明 
+　　下面的示例利用 InStrRev 函数搜索字符串： 
+　　Dim SearchString, SearchChar, MyPos 
+　　SearchString ="XXpXXpXXPXXP" ' String to search in. 
+　　SearchChar = "P" ' Search for "P". 
+　　MyPos = InstrRev(SearchString, SearchChar, 10, 0) ' A binary comparison starting at position 10. Returns 9. 
+　　MyPos = InstrRev(SearchString, SearchChar, -1, 1) ' A textual comparison starting at the last position. Returns 12. 
+　　MyPos = InstrRev(SearchString, SearchChar, 8) ' Comparison is binary by default (last argument is omitted). Returns 0. 
+　　注意 InStrRev 函数的语法与 InStr 函数的语法并不一样。 
+　　要求 版本 2 
+　　请参阅 Instr 函数

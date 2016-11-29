@@ -1,0 +1,92 @@
+============microsoft============
+WithEvents (Visual Basic)
+指定一个或多个已声明成员变量引用可引发事件的类的实例。 
+---------备注--------------------------------
+当某个变量是使用 WithEvents 定义时，您可以用声明方式指定某个方法使用 Handles 关键字处理该变量的事件。 
+
+您只能在类或模块级别使用 WithEvents。 这意味着 WithEvents 变量的声明上下文必须是类或模块，不能是源文件、命名空间、结构或过程。 
+
+您不能对结构成员使用 WithEvents。 
+
+您只能使用 WithEvents 声明单个变量，不能声明数组。
+
+
+规则：
+元素类型。您必须将 WithEvents 变量声明成为对象变量，以便它们可以接受类实例。 但是，您不能将它们声明为 Object。 必须将它们声明为可以引发事件的特定类。
+ 
+WithEvents 修饰符可用于下面的上下文中： Dim 语句 (Visual Basic) 
+
+=========blog==============
+VB WithEvents的用法
+--------------------------
+使用WithEvents变量时，应该注意下面这些限制条件：   
+1.WithEvents变量不能是派生对象变量。也就是说，不能把它声明为 As Object—当声明该变量时必须指定类名。    
+2.不能把WithEvents变量声明为As New。必须明确地创建事件源对象，并将它赋给WithEvents变量。
+3.不能在标准模块中声明WithEvents变量。只能在类模块、窗体模块以及其它定义类的模块中声明。
+不能创建WithEvents变量数组。
+
+ 
+
+下面给出一个例子,在一个ActiveX DLL工程里定义一个带事件的类,然后在标准工程里调用它
+
+ActiveX DLL工程的代码如下:
+
+Option Explicit
+'保持属性值的局部变量
+Private mvarmyProperty As Long '局部复制
+'要引发该事件，请遵循下列语法使用 RaiseEvent:
+'RaiseEvent myEvent[(arg1, arg2, ... , argn)]
+Public Event myEvent()'定义的事件		'Soy：定义事件
+
+Public Sub ModifyList(myList As Object)
+Dim list As ListView
+Set list = myList
+
+list.ListItems.Add 0, , "新项"
+
+End Sub
+
+Public Property Let myProperty(ByVal vData As Long)
+'向属性指派值时使用，位于赋值语句的左边。
+'Syntax: X.myProperty = 5
+       mvarmyProperty = vData
+End Property
+
+
+Public Property Get myProperty() As Long
+'检索属性值时使用，位于赋值语句的右边。
+'Syntax: Debug.Print X.myProperty
+       myProperty = mvarmyProperty
+End Property
+
+
+Public Sub GetMyClassMethod()
+MsgBox "You called getmyclassMethod"
+RaiseEvent myEvent			'Soy:触发事件
+End Sub
+
+ 
+
+下面是调用工程(标准工程)的代码,在工程里添加对myClass的引用
+
+Option Explicit
+'Soy:引用事件
+Private WithEvents obj As myClass'这样声明完后,就能在对象,过程下拉框里分别看到myClass和它的myEvent事件
+
+Private Sub Command1_Click()
+obj.GetMyClassMethod
+End Sub
+
+Private Sub Command2_Click()
+obj.ModifyList Me.ListView1
+End Sub
+
+Private Sub Form_Load()
+Set obj = New myClass
+
+End Sub
+
+Private Sub obj_myEvent()'Soy:编写触发事件后执行的代码
+MsgBox "here is the my event!"
+End Sub
+===============================

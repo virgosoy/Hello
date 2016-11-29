@@ -1,0 +1,20 @@
+iif函数
+VB里的函数
+==============
+根据表达式的值，来返回两部分中的其中一个。
+
+语法
+IIf(expr, truepart, falsepart) 
+
+IIf 函数的语法含有下面这些命名参数：
+描述 ：
+expr 必要参数。用来判断真伪的表达式。
+truepart 必要参数。如果 expr 为 True，则返回这部分的值或表达式。
+falsepart 必要参数。如果 expr 为 False，则返回这部分的值或表达式。
+
+说明 
+由于IIf会计算truepart和falsepart，但它只返回其中的一个。（2个都会计算）
+举例：
+a=10 b=20 
+？iif（a>b, a大于b,a小于b）
+a小于b

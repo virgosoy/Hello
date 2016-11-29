@@ -1,0 +1,87 @@
+=======总结========
+Asc()函数把汉字转化成ascii码
+AscW()函数把汉字转化成Unicode码
+Chr()函数把ascii码转化成汉字
+ChrW()函数把Unicode码转化成汉字
+
+当AscW()函数返回值为负的时候，应加上65536 才得到汉字实际的Unicode码
+====================
+Function ChrW(CharCode As Long)
+VBA.Strings 的成员
+
+返回一个包含指定本机字符的字符串(Unicode 或 ANSI)
+
+--------------
+Soy:ChrW(39118)'风
+Soy:十进制的Unicode 39118 对应的汉字是“风”
+
+============百度知道===========
+VB中如何将汉字转换为Unicode代码
+
+还有把汉字转化为ASCII码。要用什么函数？我忘了。
+问题补充： 
+谢谢大家的回答。你们的方法都很好。我想问：既然能把汉字转换成ascii码。一定也可以把ascii码转化成汉字咯。请问要用什么函数？实在是不好意思，问题又多了一个，我保证不再加了。谁先回答了这个就选谁的答案吧。『前提是回答了上个问题』
+------------------------------------------------------
+回答补充： 用Chr()函数把ascii码转化成汉字
+用ChrW()函数把Unicode码转化成汉字
+
+（还有之前说的
+AscW()函数返回值为负的时候，应加上65536 才得到汉字实际的Unicode码）
+---
+
+求汉字的Unicode代码 用AscW()函数
+AscW("汉")=27721
+
+求汉字的ASCII码 用Asc()函数 返回一个负数值
+如Asc("汉")=-17734
+
+PS:PS:改进了下 可转化多个汉字
+在窗体上建三个text控件，
+功能：text1中按个输入汉字后 text2中按个显示汉字的Unicode代码 text3中显示汉字的ASCII码
+
+原代码如下：
+
+Private Function change(s As String) As String
+change = AscW(s)
+If change < 0 Then
+change = change + 65536
+End If
+End Function
+
+Private Function change2(s As String) As String
+change2 = Asc(s)
+End Function
+
+Private Sub Text1_Change()
+For i = 1 To Len(Text1.Text)
+s = s & change(Mid(Text1.Text, i, 1)) & " "
+Next
+Text2.Text = s
+
+s = ""
+For i = 1 To Len(Text1.Text)
+s = s & change2(Mid(Text1.Text, i, 1)) & " "
+Next
+Text3.Text = s
+End Sub
+
+
+补充：a 的ASCII码是97 
+Asc函数返回的是字符串首字母的ASCII码（如字符串只一个字符，即返回该字符的ASCII码） 
+
+Asc 函数
+      
+
+返回一个 Integer，代表字符串中首字母的字符代码。
+
+语法
+
+Asc(string)
+
+必要的 string 参数可以是任何有效的字符串表达式。如果 string 中没有包含任何字符，则会产生运行时错误。
+
+PSPS: VB里 目前我还没找到能将之转换成 把汉字转换成西欧文编码的函数 不敢断言没有（有估计也很难找 我搜了好多关键字都没找到）
+
+还有 不只是遨游浏览器，一般的IE浏览器 也有此功能
+
+查看——编码——其他——最下面那小三角号——西欧(ISO)

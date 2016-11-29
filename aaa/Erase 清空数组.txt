@@ -1,0 +1,9 @@
+Erase
+-----------------------------
+清空数组，可以删除已存在的数据以释放内存
+
+Eg:
+Dim Array() as integer
+Redim Array(10)
+Erase Array()	'清空数组，释放内存
+'Msgbox Array(0)  '这里如果再访问数组就报错了

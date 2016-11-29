@@ -1,0 +1,10 @@
+=============EG======
+With nfIconData
+.hWnd = Me.hWnd
+.uID = Me.Icon
+.uFlags = NIF_ICON Or NIF_MESSAGE Or NIF_TIP
+.uCallbackMessage = WM_MOUSEMOVE
+.hIcon = Me.Icon.Handle
+.szTip = App.Title & vbCrLf & "°æ±¾: " & App.Major & "." & App.Minor & "." & App.Revision & vbCrLf & "×´Ì¬: Õý³£" & vbNullChar
+.cbSize = Len(nfIconData)
+End With
